@@ -6,10 +6,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeib Tools | Micro-Herramientas Gratuitas y Forenses en Chile</title>
-    <meta name="description" content="Portal satélite ultraliviano de micro-herramientas gratuitas. Transcriptor de YouTube, Lector Forense de Metadatos (Imágenes y PDF), Generador de QR y WhatsApp sin almacenamiento en servidor.">
-    <meta name="author" content="Yeib AI">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Yeib Tools | Micro-Herramientas Gratuitas & Análisis Forense Local</title>
+    <meta name="description" content="Suite ultraliviana de micro-herramientas gratuitas. Transcriptor de YouTube, Lector Forense de Metadatos (Imágenes y PDF), Generador de QR y WhatsApp sin almacenamiento en servidor.">
+    <meta name="author" content="Yeib">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -30,26 +30,7 @@
 </head>
 <body>
 
-    <!-- POWERBAR SUPERIOR (ESTILO FREEBLIOTECA) -->
-    <div class="powerbar">
-        <div class="powerbar-container">
-            <div class="powerbar-announcement">
-                <span class="powerbar-badge">CERO RASTREO</span>
-                <span>Procesamos todo en tu navegador para no saturar nuestra VPS ni guardar tus archivos.</span>
-            </div>
-            <div class="powerbar-actions">
-                <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-dim);">¿Te sirvió? Apóyanos:</span>
-                <a href="https://link.mercadopago.cl/yeib" target="_blank" class="btn-donate btn-mp">
-                    <span>MP Mercado Pago</span>
-                </a>
-                <a href="https://paypal.me/yeib22" target="_blank" class="btn-donate btn-pp">
-                    <span>PP PayPal</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- HEADER PRINCIPAL CON LOGO OFICIAL -->
+    <!-- HEADER PRINCIPAL CON LOGO OFICIAL YEIB -->
     <header class="header">
         <div class="header-inner">
             <a href="/" class="header-brand">
@@ -128,9 +109,9 @@
                 <div id="yt-status" class="mt-4 hidden"></div>
 
                 <div id="yt-result" class="hidden">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
                         <span id="yt-meta-info" style="font-size: 0.75rem; font-weight: 800; color: var(--primary-cyan);"></span>
-                        <div style="display: flex; gap: 0.5rem;">
+                        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
                             <button onclick="copyYtText('full')" class="btn-action btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem;">📋 Copiar con Tiempos</button>
                             <button onclick="copyYtText('plain')" class="btn-action btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem;">📄 Copiar Solo Texto</button>
                             <button onclick="downloadYtText()" class="btn-action btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.7rem;">📥 Descargar .TXT</button>
@@ -149,17 +130,17 @@
 
                 <div class="dropzone" id="metadata-dropzone">
                     <div class="dropzone-icon">📁</div>
-                    <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem;">Arrastra tu archivo aquí o haz clic para seleccionar</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Soporta imágenes (JPG, PNG, WEBP) y documentos PDF.</p>
+                    <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 0.4rem;">Arrastra tu archivo aquí o haz clic para seleccionar</h3>
+                    <p style="font-size: 0.775rem; color: var(--text-muted);">Soporta imágenes (JPG, PNG, WEBP) y documentos PDF.</p>
                     <input type="file" id="metadata-file-input" style="display: none;" accept="image/*,application/pdf">
                 </div>
 
-                <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.8rem; border-radius: var(--radius-md); font-size: 0.75rem; color: var(--accent-emerald); font-weight: 700;">
-                    🔒 <strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. <u>Ningún byte se envía a nuestra VPS</u>.
+                <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.75rem; color: var(--accent-emerald); font-weight: 700;">
+                    🔒 <strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. <u>Ningún byte se envía a nuestro servidor</u>.
                 </div>
 
-                <div id="metadata-result" class="hidden" style="margin-top: 1.5rem;">
-                    <h4 id="metadata-filename" style="font-size: 0.9rem; font-weight: 800; color: var(--primary-teal);"></h4>
+                <div id="metadata-result" class="hidden" style="margin-top: 1.25rem;">
+                    <h4 id="metadata-filename" style="font-size: 0.85rem; font-weight: 800; color: var(--primary-teal);"></h4>
                     <div id="metadata-output" class="result-box"></div>
                 </div>
             </div>
@@ -180,7 +161,7 @@
                     🎨 Generar Código QR
                 </button>
 
-                <div id="qr-output-container" style="text-align: center; margin-top: 2rem;"></div>
+                <div id="qr-output-container" style="text-align: center; margin-top: 1.75rem;"></div>
             </div>
 
             <!-- PANEL 4: WHATSAPP LINK -->
@@ -204,10 +185,10 @@
                     🔗 Crear Enlace Directo
                 </button>
 
-                <div id="wa-result" class="hidden" style="margin-top: 1.5rem;">
+                <div id="wa-result" class="hidden" style="margin-top: 1.25rem;">
                     <label class="form-label">Tu Enlace Generado:</label>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <input type="text" id="wa-generated-link" class="form-control" readonly>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <input type="text" id="wa-generated-link" class="form-control" style="flex: 1; min-width: 200px;" readonly>
                         <button onclick="copyWaLink()" class="btn-action btn-secondary">Copiar</button>
                         <a id="wa-test-btn" href="#" target="_blank" class="btn-action">Probar Chat</a>
                     </div>
@@ -226,7 +207,7 @@
                     <textarea id="cleaner-input" class="form-control" placeholder="Pega tu texto aquí..." oninput="updateTextStats()"></textarea>
                 </div>
 
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem;">
                     <button onclick="processText('upper')" class="btn-action btn-secondary">MAYÚSCULAS</button>
                     <button onclick="processText('lower')" class="btn-action btn-secondary">minúsculas</button>
                     <button onclick="processText('title')" class="btn-action btn-secondary">Modo Título</button>
@@ -235,32 +216,23 @@
                     <button onclick="copyCleanerText()" class="btn-action">📋 Copiar Texto</button>
                 </div>
 
-                <div style="display: flex; gap: 1.5rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 800;">
+                <div style="display: flex; gap: 1.25rem; font-size: 0.775rem; color: var(--text-muted); font-weight: 800; flex-wrap: wrap;">
                     <span>Caracteres: <strong id="text-stat-chars" style="color: var(--primary-teal);">0</strong></span>
                     <span>Palabras: <strong id="text-stat-words" style="color: var(--primary-cyan);">0</strong></span>
                     <span>Líneas: <strong id="text-stat-lines" style="color: var(--primary-indigo);">0</strong></span>
                 </div>
             </div>
 
-            <!-- BANNER DE AUTO-PUBLICIDAD (ECOSISTEMA YEIB) -->
-            <div class="ecosystem-banner">
-                <div class="ecosystem-info">
-                    <h4>🚀 ¿Buscas Licitaciones en Chile?</h4>
-                    <p>En <strong>Licitamejor.cl</strong> monitoreamos Mercado Público con Inteligencia Artificial para que no se te escape ninguna oportunidad.</p>
-                </div>
-                <a href="https://licitamejor.cl" target="_blank" class="btn-banner">Conocer Licitamejor</a>
-            </div>
-
         </section>
 
 
-        <!-- SIDEBAR LATERAL PUBLICITARIO & PROMOTIONAL -->
+        <!-- SIDEBAR LATERAL PUBLICITARIO & ECOSISTEMA -->
         <aside class="sidebar">
 
             <!-- WIDGET 1: ECOSISTEMA YEIB -->
             <div class="sidebar-widget">
-                <h3 class="widget-title">Ecosistema Yeib AI</h3>
-                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <h3 class="widget-title"><span>🌐</span> Ecosistema Yeib</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.65rem;">
                     
                     <a href="https://indicadores.yeib.cl" target="_blank" class="eco-card">
                         <div class="eco-card-title">📈 Indicadores y Datos</div>
@@ -272,27 +244,22 @@
                         <div class="eco-card-desc">Minería forense de datos e inercia posicional para Loto y Kino.</div>
                     </a>
 
-                    <a href="https://licitamejor.cl" target="_blank" class="eco-card">
-                        <div class="eco-card-title">⚖️ LicitaMejor AI</div>
-                        <div class="eco-card-desc">Motor inteligente de captura de licitaciones públicas.</div>
-                    </a>
-
                 </div>
             </div>
 
             <!-- WIDGET 2: ESPACIO PUBLICITARIO EXTERNO FUTURO -->
             <div class="sidebar-widget">
-                <h3 class="widget-title">Espacio Publicitario</h3>
+                <h3 class="widget-title"><span>📢</span> Publicidad / Sponsors</h3>
                 <div class="ad-box">
-                    <span>📢 Espacio disponible para Anuncios / Sponsors</span>
+                    <span>Espacio disponible para Anuncios de Terceros</span>
                 </div>
             </div>
 
-            <!-- WIDGET 3: GARANTÍA PRIVACIDAD -->
+            <!-- WIDGET 3: GARANTÍA DE PRIVACIDAD ABSOLUTA -->
             <div class="sidebar-widget" style="background: rgba(13, 148, 136, 0.05); border-color: rgba(13, 148, 136, 0.3);">
-                <h3 class="widget-title" style="color: var(--primary-teal);">🛡️ Garantía de VPS</h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
-                    Nuestras herramientas corren en el navegador del usuario para no recargar memoria ni disco en la VPS. 
+                <h3 class="widget-title" style="color: var(--primary-teal);"><span>🛡️</span> Privacidad Absoluta</h3>
+                <p style="font-size: 0.725rem; color: var(--text-muted); line-height: 1.45;">
+                    En Yeib no almacenamos ni registramos tus archivos o datos. Todo se procesa localmente en tu propio dispositivo para tu total tranquilidad.
                 </p>
             </div>
 
@@ -303,13 +270,36 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-privacy-box">
-            <strong>🔒 Declaración Paranoica de Privacidad:</strong> No guardamos tus búsquedas, no guardamos tus archivos, no tenemos bases de datos conectadas a este sitio satélite y no usamos cookies de seguimiento publicitario. Todo se procesa localmente en tu propio dispositivo.
+            <strong>🔒 Declaración de Privacidad:</strong> No guardamos tus búsquedas, no guardamos tus archivos y no usamos cookies de seguimiento publicitario. Todo se procesa localmente en tu propio dispositivo.
         </div>
         <p>© <?php echo date('Y'); ?> <strong>Yeib Tools</strong> — Desarrollado con PHP Puro & Vanilla JS para la máxima velocidad.</p>
     </footer>
 
+    <!-- POWERBAR INFERIOR FLOTANTE (ESTILO FREEBLIOTECA) -->
+    <div id="powerbar-bottom" class="powerbar-bottom">
+        <div class="powerbar-bottom-info">
+            <span class="powerbar-bottom-badge">❤️ APORTAR</span>
+            <span>¿Te sirvió alguna herramienta? Tu donación ayuda a mantener la infraestructura libre.</span>
+        </div>
+        <div class="powerbar-bottom-actions">
+            <a href="https://link.mercadopago.cl/yeib" target="_blank" class="btn-donate btn-mp">
+                <span>Mercado Pago</span>
+            </a>
+            <a href="https://paypal.me/yeib22" target="_blank" class="btn-donate btn-pp">
+                <span>PayPal</span>
+            </a>
+            <button onclick="closePowerbar()" class="powerbar-close-btn" title="Cerrar barra">✕</button>
+        </div>
+    </div>
+
     <!-- LIBRERÍAS Y SCRIPTS CLIENTE -->
     <script src="assets/js/qrcode.min.js"></script>
     <script src="assets/js/tools.js"></script>
+    <script>
+        function closePowerbar() {
+            const bar = document.getElementById('powerbar-bottom');
+            if (bar) bar.classList.add('closed');
+        }
+    </script>
 </body>
 </html>
