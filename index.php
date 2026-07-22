@@ -6,7 +6,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yeib Tools | Micro-Herramientas Gratuitas & Análisis Forense Local</title>
     <meta name="description" content="Suite ultraliviana de micro-herramientas gratuitas. Transcriptor de YouTube, Lector Forense de Metadatos (Imágenes y PDF), Generador de QR y WhatsApp sin almacenamiento en servidor.">
     <meta name="author" content="Yeib">
@@ -30,11 +30,12 @@
 </head>
 <body>
 
-    <!-- HEADER PRINCIPAL CON LOGO OFICIAL YEIB -->
-    <header class="header">
-        <div class="header-inner">
-            <a href="/" class="header-brand">
-                <div class="logo-wrapper">
+    <!-- NAVBAR CONVENCIONAL STICKY (ESTILO FREEBLIOTECA / INDICADORES) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Brand / Logo -->
+            <a href="/" class="nav-brand">
+                <div class="logo-box">
                     <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="yeibLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -50,20 +51,36 @@
                         <path d="M4 24H28" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
                 </div>
-                <div>
-                    <h1 class="brand-title">Yeib <span class="cyan">Tools</span></h1>
-                    <p class="brand-subtitle">Suite de Micro-Herramientas Gratuitas & Análisis Forense Local</p>
+                <div class="brand-text">
+                    Yeib <span class="light">Tools</span>
                 </div>
             </a>
 
-            <div class="header-status">
-                <div class="privacy-pill">
-                    <span class="privacy-dot"></span>
-                    <span>100% Privacidad Garantizada</span>
+            <!-- Right side: Status badge & Donate Dropdown -->
+            <div class="nav-right">
+                <div class="privacy-badge">
+                    <span class="privacy-dot"></span> 100% Client-Side
+                </div>
+
+                <!-- Dropdown de Donaciones -->
+                <div class="dropdown-wrapper">
+                    <button onclick="toggleDonateMenu(event)" class="btn-donate-toggle">
+                        ❤️ Donar
+                    </button>
+                    <div id="donate-dropdown" class="dropdown-menu">
+                        <a href="https://link.mercadopago.cl/yeib" target="_blank" class="dropdown-item">
+                            <span>Mercado Pago</span>
+                            <span class="tag-mp">MP</span>
+                        </a>
+                        <a href="https://paypal.me/yeib22" target="_blank" class="dropdown-item">
+                            <span>PayPal</span>
+                            <span class="tag-pp">PP</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
     <!-- CONTENIDO PRINCIPAL CON SIDEBAR LATERAL -->
     <main class="main-layout">
@@ -71,8 +88,8 @@
         <!-- SECCIÓN DE HERRAMIENTAS -->
         <section class="tools-container">
 
-            <!-- TABS DE NAVEGACIÓN -->
-            <div class="tabs-wrapper">
+            <!-- GRID DE PESTAÑAS (ORDENADAS Y ADAPTABLES SIN SCROLL LATERAL EN PC) -->
+            <div class="tools-grid-tabs">
                 <button class="tab-btn active" onclick="switchTool('youtube', this)">
                     <span>📺</span> Transcriptor YouTube
                 </button>
@@ -226,7 +243,7 @@
         </section>
 
 
-        <!-- SIDEBAR LATERAL PUBLICITARIO & ECOSISTEMA -->
+        <!-- SIDEBAR LATERAL ECOSISTEMA Y PUBLICIDAD -->
         <aside class="sidebar">
 
             <!-- WIDGET 1: ECOSISTEMA YEIB -->
@@ -247,7 +264,7 @@
                 </div>
             </div>
 
-            <!-- WIDGET 2: ESPACIO PUBLICITARIO EXTERNO FUTURO -->
+            <!-- WIDGET 2: ESPACIO PUBLICITARIO EXTERNO -->
             <div class="sidebar-widget">
                 <h3 class="widget-title"><span>📢</span> Publicidad / Sponsors</h3>
                 <div class="ad-box">
@@ -255,7 +272,7 @@
                 </div>
             </div>
 
-            <!-- WIDGET 3: GARANTÍA DE PRIVACIDAD ABSOLUTA -->
+            <!-- WIDGET 3: PRIVACIDAD ABSOLUTA -->
             <div class="sidebar-widget" style="background: rgba(13, 148, 136, 0.05); border-color: rgba(13, 148, 136, 0.3);">
                 <h3 class="widget-title" style="color: var(--primary-teal);"><span>🛡️</span> Privacidad Absoluta</h3>
                 <p style="font-size: 0.725rem; color: var(--text-muted); line-height: 1.45;">
@@ -275,31 +292,22 @@
         <p>© <?php echo date('Y'); ?> <strong>Yeib Tools</strong> — Desarrollado con PHP Puro & Vanilla JS para la máxima velocidad.</p>
     </footer>
 
-    <!-- POWERBAR INFERIOR FLOTANTE (ESTILO FREEBLIOTECA) -->
-    <div id="powerbar-bottom" class="powerbar-bottom">
-        <div class="powerbar-bottom-info">
-            <span class="powerbar-bottom-badge">❤️ APORTAR</span>
-            <span>¿Te sirvió alguna herramienta? Tu donación ayuda a mantener la infraestructura libre.</span>
-        </div>
-        <div class="powerbar-bottom-actions">
-            <a href="https://link.mercadopago.cl/yeib" target="_blank" class="btn-donate btn-mp">
-                <span>Mercado Pago</span>
-            </a>
-            <a href="https://paypal.me/yeib22" target="_blank" class="btn-donate btn-pp">
-                <span>PayPal</span>
-            </a>
-            <button onclick="closePowerbar()" class="powerbar-close-btn" title="Cerrar barra">✕</button>
-        </div>
-    </div>
-
-    <!-- LIBRERÍAS Y SCRIPTS CLIENTE -->
+    <!-- SCRIPTS CLIENTE -->
     <script src="assets/js/qrcode.min.js"></script>
     <script src="assets/js/tools.js"></script>
     <script>
-        function closePowerbar() {
-            const bar = document.getElementById('powerbar-bottom');
-            if (bar) bar.classList.add('closed');
+        function toggleDonateMenu(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('donate-dropdown');
+            if (menu) menu.classList.toggle('show');
         }
+
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('donate-dropdown');
+            if (menu && menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>
