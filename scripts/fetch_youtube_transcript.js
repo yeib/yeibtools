@@ -70,11 +70,11 @@ function run() {
     const outPattern = path.join(tempDir, `${videoId}`);
 
     try {
-        // Ejecución con yt-dlp usando el proxy SOCKS5 en 127.0.0.1:40000
-        const ytDlpCmd = `yt-dlp --proxy "socks5://127.0.0.1:40000" --write-auto-sub --write-sub --sub-lang "es,es-419,es-orig,en" --ignore-errors --skip-download -o "${outPattern}" "https://www.youtube.com/watch?v=${videoId}"`;
+        // Ejecución con yt-dlp usando --sub-langs y proxy SOCKS5
+        const ytDlpCmd = `yt-dlp --proxy "socks5://127.0.0.1:40000" --write-auto-sub --write-sub --sub-langs "es.*,es,es-419,es-orig,en.*,en" --sub-format "vtt" --ignore-errors --skip-download -o "${outPattern}" "https://www.youtube.com/watch?v=${videoId}"`;
         
         try {
-            execSync(ytDlpCmd, { stdio: 'pipe', timeout: 20000 });
+            execSync(ytDlpCmd, { stdio: 'pipe', timeout: 25000 });
         } catch (e) {
             // Continuar para revisar si algún VTT se descargó
         }
@@ -82,11 +82,11 @@ function run() {
         const files = fs.readdirSync(tempDir).filter(f => f.startsWith(videoId) && f.endsWith('.vtt'));
 
         if (files.length > 0) {
-            let subFile = files.find(f => f.includes('.es.') || f.includes('.es-419.') || f.includes('.es-orig.')) || files[0];
+            let subFile = files.find(f => f.includes('.es') || f.includes('.es-') || f.includes('.es-orig.')) || files[0];
             const fullPath = path.join(tempDir, subFile);
             const vttContent = fs.readFileSync(fullPath, 'utf8');
 
-            // Limpieza inmediata de archivos temporales
+            // Limpieza inmediata de archivos temporales VTT
             files.forEach(f => {
                 try { fs.unlinkSync(path.join(tempDir, f)); } catch (e) {}
             });
@@ -110,7 +110,6 @@ function run() {
         // Ignorar
     }
 
-    // Fallback: Si yt-dlp con proxy no obtuvo VTT, avisar adecuadamente
     console.log(JSON.stringify({
         success: false,
         error: 'No se encontraron subtítulos o transcripción en español/inglés para este video. Verifica que el video posea subtítulos o transcripción automática activada en YouTube.'
