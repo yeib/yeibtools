@@ -8,15 +8,51 @@ $version = time();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeib Tools | Micro-Herramientas Gratuitas & Análisis Forense Local</title>
-    <meta name="description" content="Suite ultraliviana de micro-herramientas gratuitas. Transcriptor de YouTube, Lector Forense de Metadatos (Imágenes y PDF), Generador de QR y WhatsApp sin almacenamiento en servidor.">
+    <title>Yeib Tools | Micro-Herramientas Gratuitas, Transcriptor YouTube & Análisis Forense PDF</title>
+    <meta name="description" content="Suite gratuita de micro-herramientas online sin registro. Transcriptor de YouTube gratis, lector y editor de metadatos PDF/EXIF, generador de códigos QR HD personalizados, creador de links de WhatsApp y limpiador de texto. 100% privado en tu navegador.">
+    <meta name="keywords" content="transcriptor youtube gratis, extraer subtitulos youtube, lector metadatos pdf, borrar autor pdf, editar metadatos pdf online, eliminar exif fotos, generador codigo qr personalizado, crear link whatsapp gratis, limpiador de texto online, herramientas gratis sin registro, yeib tools">
     <meta name="author" content="Yeib">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://tools.yeib.cl/">
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / Twitter -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tools.yeib.cl/">
-    <meta property="og:title" content="Yeib Tools | Micro-Herramientas Gratuitas sin Rastreo">
-    <meta property="og:description" content="Transcripción de videos, lectura de metadatos forenses en cliente y herramientas de productividad sin subir archivos al servidor.">
+    <meta property="og:title" content="Yeib Tools | Micro-Herramientas Gratuitas sin Registro ni Rastreo">
+    <meta property="og:description" content="Transcripción de videos de YouTube, lectura y edición de metadatos PDF/EXIF en cliente, generador QR HD y herramientas de productividad sin subir archivos al servidor.">
+    <meta property="og:site_name" content="Yeib Tools">
+
+    <!-- Schema.org JSON-LD Structured Data para Google Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Yeib Tools",
+      "url": "https://tools.yeib.cl/",
+      "description": "Suite gratuita de micro-herramientas de productividad y análisis forense client-side. Transcriptor de YouTube, editor y limpiador de metadatos PDF/EXIF, generador QR HD y creador de enlaces de WhatsApp.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Yeib",
+        "url": "https://yeib.cl"
+      },
+      "featureList": [
+        "Transcriptor de YouTube con marcas de tiempo usando proxy SOCKS5",
+        "Lector y Editor de metadatos forenses PDF y EXIF sin subir archivos al servidor",
+        "Sanitizador de PDF para borrar autor, software y fechas ocultas",
+        "Generador de Códigos QR de alta resolución con diseño de color personalizable",
+        "Generador de enlaces directos para chats de WhatsApp",
+        "Limpiador y formateador de texto online"
+      ]
+    }
+    </script>
 
     <!-- Fonts Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,7 +178,7 @@ $version = time();
                             <path d="M4 24H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-black tracking-tighter text-yeib-teal uppercase">Yeib <span class="text-slate-900 dark:text-white font-light normal-case">Tools</span></span>
+                    <h1 class="text-xl font-black tracking-tighter text-yeib-teal uppercase">Yeib <span class="text-slate-900 dark:text-white font-light normal-case">Tools</span></h1>
                 </a>
                 
                 <!-- Right Side Actions: Theme Toggle, Language Selector & Donate Dropdown -->
