@@ -75,12 +75,22 @@
                     <span class="text-xl font-black tracking-tighter text-yeib-teal uppercase">Yeib <span class="text-white font-light normal-case">Tools</span></span>
                 </a>
                 
-                <!-- Right Side Actions: Donate Dropdown -->
-                <div class="flex items-center gap-4">
+                <!-- Right Side Actions: Language Selector & Donate Dropdown -->
+                <div class="flex items-center gap-3">
+                    <!-- Selector de Idioma Dual (ES / EN) -->
+                    <div class="flex items-center bg-slate-900 border border-slate-700/80 rounded-xl p-0.5 shadow-inner">
+                        <button onclick="setLanguage('es')" id="lang-btn-es" class="px-2.5 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm">
+                            ES
+                        </button>
+                        <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 text-slate-400 hover:text-white rounded-lg text-[10px] font-black uppercase transition-all">
+                            EN
+                        </button>
+                    </div>
+
                     <!-- Donate Dropdown (Alpine.js) -->
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl hover:bg-teal-700 active:scale-95 transition-all shadow-lg">
-                            ❤️ <span>Donar</span>
+                            ❤️ <span class="hidden sm:inline" data-i18n="donate">Donar</span>
                         </button>
                         <div x-show="open" x-cloak @click.away="open = false" x-transition class="absolute top-full mt-3 right-0 w-52 bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-2 z-[110]">
                             <a href="https://link.mercadopago.cl/yeib" target="_blank" class="flex items-center justify-between p-3 hover:bg-slate-700 rounded-xl text-[10px] font-black uppercase text-white transition-all">
@@ -108,19 +118,19 @@
                 <!-- TOOL TABS GRID (5 COLS DESKTOP, ORDERED, NO HORIZONTAL SCROLL) -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
                     <button id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-slate-800 border border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-400 hover:text-yeib-teal hover:border-yeib-teal/50 transition-all flex items-center justify-center gap-2 active-tab-style shadow-sm">
-                        <span>📺</span> <span class="truncate">Transcriptor</span>
+                        <span>📺</span> <span class="truncate" data-i18n="tab_youtube">Transcriptor</span>
                     </button>
                     <button id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-slate-800 border border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-400 hover:text-yeib-teal hover:border-yeib-teal/50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>🕵️‍♂️</span> <span class="truncate">Metadatos</span>
+                        <span>🕵️‍♂️</span> <span class="truncate" data-i18n="tab_metadata">Metadatos</span>
                     </button>
                     <button id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-slate-800 border border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-400 hover:text-yeib-teal hover:border-yeib-teal/50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>📱</span> <span class="truncate">Código QR</span>
+                        <span>📱</span> <span class="truncate" data-i18n="tab_qr">Código QR</span>
                     </button>
                     <button id="btn-tab-whatsapp" onclick="switchTool('whatsapp')" class="tool-tab-btn px-4 py-3 bg-slate-800 border border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-400 hover:text-yeib-teal hover:border-yeib-teal/50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>💬</span> <span class="truncate">WhatsApp</span>
+                        <span>💬</span> <span class="truncate" data-i18n="tab_whatsapp">WhatsApp</span>
                     </button>
                     <button id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-slate-800 border border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-400 hover:text-yeib-teal hover:border-yeib-teal/50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>📝</span> <span class="truncate">Limpiador</span>
+                        <span>📝</span> <span class="truncate" data-i18n="tab_cleaner">Limpiador</span>
                     </button>
                 </div>
 
@@ -128,17 +138,17 @@
                 <div id="panel-youtube" class="tool-panel bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-700/70 shadow-xl space-y-6">
                     <div class="border-b border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📺</span> Transcriptor de YouTube
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📺</span> <span data-i18n="yt_title">Transcriptor de YouTube</span>
                         </h2>
-                        <p class="text-slate-400 text-xs font-semibold mt-1">Extrae transcripciones completas con marcas de tiempo usando proxy SOCKS5.</p>
+                        <p class="text-slate-400 text-xs font-semibold mt-1" data-i18n="yt_subtitle">Extrae transcripciones completas con marcas de tiempo usando proxy SOCKS5.</p>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider">Ingresa la URL o ID del Video</label>
-                        <input type="text" id="yt-input" placeholder="Ej: https://www.youtube.com/watch?v=jNQXAC9IVRw" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
+                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider" data-i18n="yt_label">Ingresa la URL o ID del Video</label>
+                        <input type="text" id="yt-input" data-i18n="yt_placeholder" placeholder="Ej: https://www.youtube.com/watch?v=jNQXAC9IVRw" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button onclick="fetchTranscript()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95">⚡ Obtener Transcripción</button>
+                    <button onclick="fetchTranscript()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95" data-i18n="yt_btn">⚡ Obtener Transcripción</button>
 
                     <div id="yt-status" class="hidden"></div>
 
@@ -146,9 +156,9 @@
                         <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-700/50">
                             <span id="yt-meta-info" class="text-xs font-black text-yeib-teal uppercase"></span>
                             <div class="flex flex-wrap gap-2">
-                                <button onclick="copyYtText('full')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-black uppercase rounded-xl transition-all">📋 Con Tiempos</button>
-                                <button onclick="copyYtText('plain')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-black uppercase rounded-xl transition-all">📄 Solo Texto</button>
-                                <button onclick="downloadYtText()" class="px-3 py-1.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all">📥 Descargar .TXT</button>
+                                <button onclick="copyYtText('full')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="yt_copy_full">📋 Con Tiempos</button>
+                                <button onclick="copyYtText('plain')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="yt_copy_plain">📄 Solo Texto</button>
+                                <button onclick="downloadYtText()" class="px-3 py-1.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="yt_download">📥 Descargar .TXT</button>
                             </div>
                         </div>
                         <div id="yt-raw-text" class="bg-slate-950 p-5 rounded-2xl border border-slate-800 font-mono text-xs text-slate-300 max-h-96 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
@@ -159,20 +169,20 @@
                 <div id="panel-metadata" class="tool-panel hidden bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-700/70 shadow-xl space-y-6">
                     <div class="border-b border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🕵️‍♂️</span> Lector de Metadatos Forenses (EXIF & PDF)
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🕵️‍♂️</span> <span data-i18n="meta_title">Lector de Metadatos Forenses (EXIF & PDF)</span>
                         </h2>
-                        <p class="text-slate-400 text-xs font-semibold mt-1">Inspecciona autor, software, modelo de cámara, fechas e información oculta localmente.</p>
+                        <p class="text-slate-400 text-xs font-semibold mt-1" data-i18n="meta_subtitle">Inspecciona autor, software, modelo de cámara, fechas e información oculta localmente.</p>
                     </div>
 
                     <div class="border-2 border-dashed border-teal-500/30 hover:border-yeib-teal bg-slate-900/40 rounded-3xl p-10 text-center cursor-pointer transition-all group" id="metadata-dropzone">
                         <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">📁</div>
-                        <h3 class="text-sm font-black uppercase text-white mb-1">Arrastra tu archivo aquí o haz clic para examinar</h3>
-                        <p class="text-xs text-slate-400 font-medium">Soporta imágenes (JPG, PNG, WEBP) y documentos PDF.</p>
+                        <h3 class="text-sm font-black uppercase text-white mb-1" data-i18n="meta_drop_title">Arrastra tu archivo aquí o haz clic para examinar</h3>
+                        <p class="text-xs text-slate-400 font-medium" data-i18n="meta_drop_subtitle">Soporta imágenes (JPG, PNG, WEBP) y documentos PDF.</p>
                         <input type="file" id="metadata-file-input" class="hidden" accept="image/*,application/pdf">
                     </div>
 
                     <div class="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-2xl text-xs text-emerald-400 font-bold flex items-center gap-2">
-                        🔒 <span><strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. Ningún byte sale hacia el servidor.</span>
+                        <span data-i18n="meta_security">🔒 <strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. Ningún byte sale hacia el servidor.</span>
                     </div>
 
                     <div id="metadata-result" class="hidden space-y-3">
@@ -185,17 +195,17 @@
                 <div id="panel-qr" class="tool-panel hidden bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-700/70 shadow-xl space-y-6">
                     <div class="border-b border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> Generador de Código QR
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR</span>
                         </h2>
-                        <p class="text-slate-400 text-xs font-semibold mt-1">Genera códigos QR de alta resolución instantáneamente en tu navegador.</p>
+                        <p class="text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Genera códigos QR de alta resolución instantáneamente en tu navegador.</p>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider">Texto o URL a Codificar</label>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider" data-i18n="qr_label">Texto o URL a Codificar</label>
                         <input type="text" id="qr-text-input" placeholder="Ej: https://tools.yeib.cl/" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button onclick="generateQrCode()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95">🎨 Generar Código QR</button>
+                    <button onclick="generateQrCode()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95" data-i18n="qr_btn">🎨 Generar Código QR</button>
 
                     <div id="qr-output-container" class="flex flex-col items-center justify-center pt-4"></div>
                 </div>
@@ -204,31 +214,31 @@
                 <div id="panel-whatsapp" class="tool-panel hidden bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-700/70 shadow-xl space-y-6">
                     <div class="border-b border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">💬</span> Generador de Enlaces de WhatsApp
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">💬</span> <span data-i18n="wa_title">Generador de Enlaces de WhatsApp</span>
                         </h2>
-                        <p class="text-slate-400 text-xs font-semibold mt-1">Crea un enlace directo para iniciar chats sin guardar contactos.</p>
+                        <p class="text-slate-400 text-xs font-semibold mt-1" data-i18n="wa_subtitle">Crea un enlace directo para iniciar chats sin guardar contactos.</p>
                     </div>
 
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-2">Número de Teléfono (con código de país sin +)</label>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-2" data-i18n="wa_phone_label">Número de Teléfono (con código de país sin +)</label>
                             <input type="text" id="wa-phone" placeholder="Ej: 56912345678" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-2">Mensaje Pre-llenado (Opcional)</label>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-2" data-i18n="wa_msg_label">Mensaje Pre-llenado (Opcional)</label>
                             <textarea id="wa-message" placeholder="Ej: Hola, vi tu anuncio y quiero consultar..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-24"></textarea>
                         </div>
                     </div>
 
-                    <button onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95">🔗 Crear Enlace Directo</button>
+                    <button onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95" data-i18n="wa_btn">🔗 Crear Enlace Directo</button>
 
                     <div id="wa-result" class="hidden space-y-3 pt-2">
-                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider">Tu Enlace Generado:</label>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider" data-i18n="wa_result_label">Tu Enlace Generado:</label>
                         <div class="flex flex-wrap gap-2">
                             <input type="text" id="wa-generated-link" readonly class="flex-1 bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3 text-white font-mono text-xs focus:outline-none" />
-                            <button onclick="copyWaLink()" class="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white text-xs font-black uppercase rounded-2xl transition-all">Copiar</button>
-                            <a id="wa-test-btn" href="#" target="_blank" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center">Probar Chat</a>
+                            <button onclick="copyWaLink()" class="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white text-xs font-black uppercase rounded-2xl transition-all" data-i18n="wa_copy">Copiar</button>
+                            <a id="wa-test-btn" href="#" target="_blank" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center" data-i18n="wa_test">Probar Chat</a>
                         </div>
                     </div>
                 </div>
@@ -237,29 +247,29 @@
                 <div id="panel-cleaner" class="tool-panel hidden bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-700/70 shadow-xl space-y-6">
                     <div class="border-b border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📝</span> Limpiador y Formateador de Texto
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📝</span> <span data-i18n="clean_title">Limpiador y Formateador de Texto</span>
                         </h2>
-                        <p class="text-slate-400 text-xs font-semibold mt-1">Normaliza, convierte a mayúsculas/minúsculas y elimina espacios sobrantes instantáneamente.</p>
+                        <p class="text-slate-400 text-xs font-semibold mt-1" data-i18n="clean_subtitle">Normaliza, convierte a mayúsculas/minúsculas y elimina espacios sobrantes instantáneamente.</p>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider">Ingresa tu Texto</label>
-                        <textarea id="cleaner-input" oninput="updateTextStats()" placeholder="Pega tu texto aquí..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-36"></textarea>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 tracking-wider" data-i18n="clean_label">Ingresa tu Texto</label>
+                        <textarea id="cleaner-input" oninput="updateTextStats()" data-i18n="clean_placeholder" placeholder="Pega tu texto aquí..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-3.5 text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-36"></textarea>
                     </div>
 
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="processText('upper')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all">MAYÚSCULAS</button>
-                        <button onclick="processText('lower')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all">minúsculas</button>
-                        <button onclick="processText('title')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all">Modo Título</button>
-                        <button onclick="processText('spaces')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all">Sin Dobles Espacios</button>
-                        <button onclick="processText('newlines')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all">Sin Saltos de Línea</button>
-                        <button onclick="copyCleanerText()" class="px-5 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all">📋 Copiar Texto</button>
+                        <button onclick="processText('upper')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_upper">MAYÚSCULAS</button>
+                        <button onclick="processText('lower')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_lower">minúsculas</button>
+                        <button onclick="processText('title')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_title_case">Modo Título</button>
+                        <button onclick="processText('spaces')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_spaces">Sin Dobles Espacios</button>
+                        <button onclick="processText('newlines')" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-650 text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_newlines">Sin Saltos de Línea</button>
+                        <button onclick="copyCleanerText()" class="px-5 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_copy">📋 Copiar Texto</button>
                     </div>
 
                     <div class="flex items-center gap-6 text-xs text-slate-400 font-bold pt-2">
-                        <span>Caracteres: <strong id="text-stat-chars" class="text-yeib-teal font-black">0</strong></span>
-                        <span>Palabras: <strong id="text-stat-words" class="text-indigo-400 font-black">0</strong></span>
-                        <span>Líneas: <strong id="text-stat-lines" class="text-emerald-400 font-black">0</strong></span>
+                        <span><span data-i18n="clean_chars">Caracteres:</span> <strong id="text-stat-chars" class="text-yeib-teal font-black">0</strong></span>
+                        <span><span data-i18n="clean_words">Palabras:</span> <strong id="text-stat-words" class="text-indigo-400 font-black">0</strong></span>
+                        <span><span data-i18n="clean_lines">Líneas:</span> <strong id="text-stat-lines" class="text-emerald-400 font-black">0</strong></span>
                     </div>
                 </div>
 
@@ -271,18 +281,18 @@
                 <!-- WIDGET 1: PUBLICIDAD EXTERNA / SPONSORS (ARRIBA) -->
                 <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-3">
                     <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                        <span>📢</span> Publicidad / Sponsors
+                        <span>📢</span> <span data-i18n="ad_title">Publicidad / Sponsors</span>
                     </h3>
                     <div class="p-6 bg-slate-900/40 border border-dashed border-slate-700 rounded-2xl text-center text-slate-400 text-xs font-bold leading-relaxed">
-                        ¿Quieres anunciar tu marca aquí? <br/>
-                        <a href="mailto:yeib@pm.me" class="text-yeib-teal font-black hover:underline mt-1.5 inline-block">Envía un correo a yeib@pm.me</a>
+                        <span data-i18n="ad_text">¿Quieres anunciar tu marca aquí?</span> <br/>
+                        <a href="mailto:yeib@pm.me" class="text-yeib-teal font-black hover:underline mt-1.5 inline-block" data-i18n="ad_link">Envía un correo a yeib@pm.me</a>
                     </div>
                 </div>
 
                 <!-- WIDGET 2: ECOSISTEMA YEIB (ABAJO) -->
                 <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-4">
                     <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                        <span>🌐</span> Ecosistema Yeib
+                        <span>🌐</span> <span data-i18n="eco_title">Ecosistema Yeib</span>
                     </h3>
                     <div class="space-y-3">
                         <a href="https://indicadores.yeib.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
@@ -290,7 +300,7 @@
                                 <span>📈 Indicadores y Datos</span>
                                 <span class="text-[9px] text-slate-500 font-normal">↗</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Indicadores económicos en tiempo real y Kit del Emprendedor.</div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed" data-i18n="eco_1_desc">Indicadores económicos en tiempo real y Kit del Emprendedor.</div>
                         </a>
 
                         <a href="https://freeblioteca.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
@@ -298,7 +308,7 @@
                                 <span>📚 Freeblioteca</span>
                                 <span class="text-[9px] text-slate-500 font-normal">↗</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Biblioteca digital y tours 3D interactivos con acceso libre.</div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed" data-i18n="eco_2_desc">Biblioteca digital y tours 3D interactivos con acceso libre.</div>
                         </a>
 
                         <a href="https://yeib.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
@@ -306,7 +316,7 @@
                                 <span>💻 Yeib Portfolio</span>
                                 <span class="text-[9px] text-slate-500 font-normal">↗</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Portal principal y proyectos del laboratorio de software Yeib.</div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed" data-i18n="eco_3_desc">Portal principal y proyectos del laboratorio de software Yeib.</div>
                         </a>
 
                         <a href="https://proteo.yeib.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
@@ -314,7 +324,7 @@
                                 <span>🤖 Proteo AI</span>
                                 <span class="text-[9px] text-slate-500 font-normal">↗</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Sistema de inteligencia artificial y asistente avanzado.</div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed" data-i18n="eco_4_desc">Sistema de inteligencia artificial y asistente avanzado.</div>
                         </a>
 
                         <a href="https://cronicon.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
@@ -322,7 +332,7 @@
                                 <span>📜 Cronicón</span>
                                 <span class="text-[9px] text-slate-500 font-normal">↗</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Diario histórico y crónicas del patrimonio nacional.</div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed" data-i18n="eco_5_desc">Diario histórico y crónicas del patrimonio nacional.</div>
                         </a>
                     </div>
                 </div>
@@ -338,24 +348,24 @@
             <!-- PRIVACIDAD Y DISCLAIMER -->
             <div class="bg-emerald-500/5 border border-emerald-500/20 p-5 rounded-2xl text-center max-w-4xl mx-auto">
                 <p class="text-xs text-slate-400 leading-relaxed font-medium">
-                    <strong class="text-emerald-400 uppercase font-black tracking-wider mr-1">🛡️ Privacidad Absoluta:</strong> En Yeib no almacenamos ni registramos tus archivos, búsquedas o datos personales. Todo procesamiento de metadatos, códigos y herramientas ocurre 100% en el navegador de tu propio dispositivo para tu total tranquilidad.
+                    <strong class="text-emerald-400 uppercase font-black tracking-wider mr-1" data-i18n="privacy_title">🛡️ Privacidad Absoluta:</strong> <span data-i18n="privacy_body">En Yeib no almacenamos ni registramos tus archivos, búsquedas o datos personales. Todo procesamiento de metadatos, códigos y herramientas ocurre 100% en el navegador de tu propio dispositivo para tu total tranquilidad.</span>
                 </p>
             </div>
 
             <!-- COPYRIGHT & SIGNATURE -->
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t border-slate-800/80">
                 <div class="text-center md:text-left">
-                    <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">
+                    <p class="text-xs font-bold uppercase text-slate-400 tracking-wider" data-i18n="footer_rights">
                         © <?php echo date('Y'); ?> Yeib. Todos los derechos reservados.
                     </p>
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5">
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5" data-i18n="footer_subtitle">
                         Suite de Micro-Herramientas Gratuitas & Análisis Forense
                     </p>
                 </div>
 
                 <!-- FIRMA BONITA DE YEIB EN LUXURIOUS SCRIPT -->
                 <div class="flex items-center gap-3">
-                    <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Hecho en Chile por</span>
+                    <span class="text-slate-400 text-xs font-bold uppercase tracking-wider" data-i18n="footer_made_in">Hecho en Chile por</span>
                     <a href="https://yeib.cl" target="_blank" class="no-underline group relative transition-all duration-300 hover:-translate-y-0.5">
                         <span class="yeib-signature text-4xl font-normal transition-all duration-500 inline-block -rotate-2 group-hover:rotate-0 group-hover:scale-110" style="font-family: 'Luxurious Script', cursive; color: #f53003; text-shadow: 0 0 12px rgba(245, 48, 3, 0.4);">
                             yeib
@@ -369,6 +379,7 @@
 
     <!-- LIBRERÍAS Y TAB SWITCHER SCRIPTS -->
     <script src="assets/js/qrcode.min.js"></script>
+    <script src="assets/js/i18n.js"></script>
     <script src="assets/js/tools.js"></script>
     <script>
         function switchTool(toolId) {
