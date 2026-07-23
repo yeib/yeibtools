@@ -32,44 +32,47 @@ window.toggleTheme = function() {
     }
 };
 
-// Switch Tabs Engine (Direct inline style + class toggle for 100% reliability)
+// Switch Tabs Engine (100% Error-Free className replacement + display toggle)
 window.switchTool = function(toolId) {
-    // Hide all panels
+    if (!toolId) return;
+
+    // 1. Hide all panels
     const panels = document.querySelectorAll('.tool-panel');
     panels.forEach(p => {
         p.classList.add('hidden');
         p.style.display = 'none';
     });
 
-    // Reset all tab button styles
-    const buttons = document.querySelectorAll('.tool-tab-btn');
-    buttons.forEach(b => {
-        b.classList.remove('bg-yeib-teal', 'text-white', 'border-transparent', 'shadow-md');
-        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700/60');
-    });
-
-    // Show target panel
+    // 2. Show target panel
     const targetPanel = document.getElementById('panel-' + toolId);
     if (targetPanel) {
         targetPanel.classList.remove('hidden');
         targetPanel.style.display = 'block';
     }
 
-    // Highlight active tab button
+    // 3. Update tab buttons styling
+    const activeClass = "tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer select-none";
+    const inactiveClass = "tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
+
+    const buttons = document.querySelectorAll('.tool-tab-btn');
+    buttons.forEach(b => {
+        b.className = inactiveClass;
+    });
+
     const targetBtn = document.getElementById('btn-tab-' + toolId);
     if (targetBtn) {
-        targetBtn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700/60');
-        targetBtn.classList.add('bg-yeib-teal', 'text-white', 'border-transparent', 'shadow-md');
+        targetBtn.className = activeClass;
     }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
-    // Attach click listeners to tab buttons as fallback
-    const tabBtns = document.querySelectorAll('.tool-tab-btn');
-    tabBtns.forEach(btn => {
+    // Attach explicit click listeners to tab buttons
+    document.querySelectorAll('.tool-tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             const btnId = btn.id || '';
             const toolId = btnId.replace('btn-tab-', '');
             if (toolId) {
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Ensure YouTube tab is visible initially
+    // Ensure YouTube tab is visible on start
     window.switchTool('youtube');
 
     // --- 1. YOUTUBE TRANSCRIPT ---

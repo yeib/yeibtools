@@ -84,23 +84,23 @@
                 <!-- Right Side Actions: Theme Toggle, Language Selector & Donate Dropdown -->
                 <div class="flex items-center gap-3">
                     <!-- Botón de Modo Claro / Oscuro -->
-                    <button onclick="toggleTheme()" id="theme-toggle-btn" class="p-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-xs transition-all shadow-inner" title="Cambiar Tema (Claro / Oscuro)">
+                    <button type="button" onclick="toggleTheme()" id="theme-toggle-btn" class="p-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-xs transition-all shadow-inner cursor-pointer" title="Cambiar Tema (Claro / Oscuro)">
                         ☀️
                     </button>
 
                     <!-- Selector de Idioma Dual (ES / EN) -->
                     <div class="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 rounded-xl p-0.5 shadow-inner">
-                        <button onclick="setLanguage('es')" id="lang-btn-es" class="px-2.5 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm">
+                        <button type="button" onclick="setLanguage('es')" id="lang-btn-es" class="px-2.5 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm cursor-pointer">
                             ES
                         </button>
-                        <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-[10px] font-black uppercase transition-all">
+                        <button type="button" onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer">
                             EN
                         </button>
                     </div>
 
                     <!-- Donate Dropdown (Alpine.js) -->
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl hover:bg-teal-700 active:scale-95 transition-all shadow-lg">
+                        <button type="button" @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl hover:bg-teal-700 active:scale-95 transition-all shadow-lg cursor-pointer">
                             ❤️ <span class="hidden sm:inline" data-i18n="donate">Donar</span>
                         </button>
                         <div x-show="open" x-cloak @click.away="open = false" x-transition class="absolute top-full mt-3 right-0 w-52 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-2 z-[110]">
@@ -120,28 +120,28 @@
     </nav>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             
             <!-- LEFT AREA: TOOLS GRID & ACTIVE PANEL (3 COLS) -->
             <div class="lg:col-span-3 space-y-6">
                 
                 <!-- TOOL TABS GRID (5 COLS DESKTOP, ORDERED, NO HORIZONTAL SCROLL) -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-                    <button id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md">
-                        <span>📺</span> <span class="truncate" data-i18n="tab_youtube">Transcriptor</span>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 relative z-20">
+                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer select-none">
+                        <span>📺</span> <span class="truncate pointer-events-none" data-i18n="tab_youtube">Transcriptor</span>
                     </button>
-                    <button id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>🕵️‍♂️</span> <span class="truncate" data-i18n="tab_metadata">Metadatos</span>
+                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                        <span>🕵️‍♂️</span> <span class="truncate pointer-events-none" data-i18n="tab_metadata">Metadatos</span>
                     </button>
-                    <button id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>📱</span> <span class="truncate" data-i18n="tab_qr">Código QR</span>
+                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                        <span>📱</span> <span class="truncate pointer-events-none" data-i18n="tab_qr">Código QR</span>
                     </button>
-                    <button id="btn-tab-whatsapp" onclick="switchTool('whatsapp')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>💬</span> <span class="truncate" data-i18n="tab_whatsapp">WhatsApp</span>
+                    <button type="button" id="btn-tab-whatsapp" onclick="switchTool('whatsapp')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                        <span>💬</span> <span class="truncate pointer-events-none" data-i18n="tab_whatsapp">WhatsApp</span>
                     </button>
-                    <button id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <span>📝</span> <span class="truncate" data-i18n="tab_cleaner">Limpiador</span>
+                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                        <span>📝</span> <span class="truncate pointer-events-none" data-i18n="tab_cleaner">Limpiador</span>
                     </button>
                 </div>
 
@@ -159,7 +159,7 @@
                         <input type="text" id="yt-input" data-i18n="yt_placeholder" placeholder="Ej: https://www.youtube.com/watch?v=jNQXAC9IVRw" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button onclick="fetchTranscript()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95" data-i18n="yt_btn">⚡ Obtener Transcripción</button>
+                    <button type="button" onclick="fetchTranscript()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95 cursor-pointer" data-i18n="yt_btn">⚡ Obtener Transcripción</button>
 
                     <div id="yt-status" class="hidden"></div>
 
@@ -167,9 +167,9 @@
                         <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-100 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/50">
                             <span id="yt-meta-info" class="text-xs font-black text-yeib-teal uppercase"></span>
                             <div class="flex flex-wrap gap-2">
-                                <button onclick="copyYtText('full')" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="yt_copy_full">📋 Con Tiempos</button>
-                                <button onclick="copyYtText('plain')" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="yt_copy_plain">📄 Solo Texto</button>
-                                <button onclick="downloadYtText()" class="px-3 py-1.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="yt_download">📥 Descargar .TXT</button>
+                                <button type="button" onclick="copyYtText('full')" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_full">📋 Con Tiempos</button>
+                                <button type="button" onclick="copyYtText('plain')" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_plain">📄 Solo Texto</button>
+                                <button type="button" onclick="downloadYtText()" class="px-3 py-1.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_download">📥 Descargar .TXT</button>
                             </div>
                         </div>
                         <div id="yt-raw-text" class="bg-slate-100 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-300 max-h-96 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
@@ -177,7 +177,7 @@
                 </div>
 
                 <!-- PANEL 2: METADATOS FORENSES -->
-                <div id="panel-metadata" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
+                <div id="panel-metadata" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🕵️‍♂️</span> <span data-i18n="meta_title">Lector de Metadatos Forenses (EXIF & PDF)</span>
@@ -203,7 +203,7 @@
                 </div>
 
                 <!-- PANEL 3: GENERADOR QR -->
-                <div id="panel-qr" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
+                <div id="panel-qr" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR</span>
@@ -216,13 +216,13 @@
                         <input type="text" id="qr-text-input" placeholder="Ej: https://tools.yeib.cl/" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button onclick="generateQrCode()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95" data-i18n="qr_btn">🎨 Generar Código QR</button>
+                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código QR</button>
 
                     <div id="qr-output-container" class="flex flex-col items-center justify-center pt-4"></div>
                 </div>
 
                 <!-- PANEL 4: WHATSAPP LINK -->
-                <div id="panel-whatsapp" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
+                <div id="panel-whatsapp" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">💬</span> <span data-i18n="wa_title">Generador de Enlaces de WhatsApp</span>
@@ -242,20 +242,20 @@
                         </div>
                     </div>
 
-                    <button onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95" data-i18n="wa_btn">🔗 Crear Enlace Directo</button>
+                    <button type="button" onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95 cursor-pointer" data-i18n="wa_btn">🔗 Crear Enlace Directo</button>
 
                     <div id="wa-result" class="hidden space-y-3 pt-2">
                         <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="wa_result_label">Tu Enlace Generado:</label>
                         <div class="flex flex-wrap gap-2">
                             <input type="text" id="wa-generated-link" readonly class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3 text-slate-900 dark:text-white font-mono text-xs focus:outline-none" />
-                            <button onclick="copyWaLink()" class="px-4 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-black uppercase rounded-2xl transition-all" data-i18n="wa_copy">Copiar</button>
+                            <button type="button" onclick="copyWaLink()" class="px-4 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-black uppercase rounded-2xl transition-all cursor-pointer" data-i18n="wa_copy">Copiar</button>
                             <a id="wa-test-btn" href="#" target="_blank" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center" data-i18n="wa_test">Probar Chat</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- PANEL 5: LIMPIADOR DE TEXTO -->
-                <div id="panel-cleaner" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
+                <div id="panel-cleaner" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📝</span> <span data-i18n="clean_title">Limpiador y Formateador de Texto</span>
@@ -269,12 +269,12 @@
                     </div>
 
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="processText('upper')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_upper">MAYÚSCULAS</button>
-                        <button onclick="processText('lower')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_lower">minúsculas</button>
-                        <button onclick="processText('title')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_title_case">Modo Título</button>
-                        <button onclick="processText('spaces')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_spaces">Sin Dobles Espacios</button>
-                        <button onclick="processText('newlines')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_newlines">Sin Saltos de Línea</button>
-                        <button onclick="copyCleanerText()" class="px-5 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all" data-i18n="clean_copy">📋 Copiar Texto</button>
+                        <button type="button" onclick="processText('upper')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_upper">MAYÚSCULAS</button>
+                        <button type="button" onclick="processText('lower')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_lower">minúsculas</button>
+                        <button type="button" onclick="processText('title')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_title_case">Modo Título</button>
+                        <button type="button" onclick="processText('spaces')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_spaces">Sin Dobles Espacios</button>
+                        <button type="button" onclick="processText('newlines')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_newlines">Sin Saltos de Línea</button>
+                        <button type="button" onclick="copyCleanerText()" class="px-5 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_copy">📋 Copiar Texto</button>
                     </div>
 
                     <div class="flex items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-bold pt-2">
