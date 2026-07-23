@@ -142,7 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- 2. LECTOR DE METADATOS FORENSES (IMÁGENES Y PDFS 100% LOCAL) ---
+    // --- 2. LECTOR Y EDITOR DE METADATOS FORENSES (100% LOCAL CLIENT-SIDE) ---
+    let currentLoadedFile = null;
+    let currentLoadedArrayBuffer = null;
+
     const dropzone = document.getElementById('metadata-dropzone');
     const fileInput = document.getElementById('metadata-file-input');
 
@@ -174,9 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function processLocalFile(file) {
+        currentLoadedFile = file;
+
         const resultBox = document.getElementById('metadata-result');
         const output = document.getElementById('metadata-output');
         const fileNameTag = document.getElementById('metadata-filename');
+        const editorBox = document.getElementById('metadata-editor-box');
 
         resultBox.classList.remove('hidden');
         resultBox.style.display = 'block';
@@ -187,21 +193,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (file.type === 'application/pdf') {
             reader.onload = function(e) {
-                const content = e.target.result;
-                const metadata = extractPdfMetadata(content, file);
-                output.innerText = formatMetadataJson(metadata);
+                currentLoadedArrayBuffer = e.target.result;
+
+                // Intentar leer como texto parcial para extracción rápida
+                const textReader = new FileReader();
+                textReader.onload = function(evt) {
+                    const metadata = extractPdfMetadata(evt.target.result, file);
+                    output.innerText = formatMetadataJson(metadata);
+
+                    // Precargar valores detectados en el editor
+                    if (metadata["Metadatos Internos PDF"]) {
+                        document.getElementById('meta-input-author').value = metadata["Metadatos Internos PDF"]["Autor"] || '';
+                        document.getElementById('meta-input-title').value = metadata["Metadatos Internos PDF"]["Título"] || '';
+                        document.getElementById('meta-input-creator').value = metadata["Metadatos Internos PDF"]["Creador / Software"] || '';
+                    }
+
+                    if (editorBox) {
+                        editorBox.classList.remove('hidden');
+                        editorBox.style.display = 'block';
+                    }
+                };
+                textReader.readAsText(file.slice(0, 100000));
             };
-            reader.readAsText(file.slice(0, 100000));
+            reader.readAsArrayBuffer(file);
         } else if (file.type.startsWith('image/')) {
             reader.onload = function(e) {
-                const buffer = e.target.result;
-                const metadata = extractImageMetadata(buffer, file);
+                currentLoadedArrayBuffer = e.target.result;
+                const metadata = extractImageMetadata(currentLoadedArrayBuffer, file);
                 output.innerText = formatMetadataJson(metadata);
+
+                if (editorBox) {
+                    editorBox.classList.add('hidden');
+                    editorBox.style.display = 'none';
+                }
             };
             reader.readAsArrayBuffer(file);
         } else {
             output.innerText = `Tipo de archivo: ${file.type || 'Desconocido'}\nTamaño: ${file.size} bytes\nÚltima modificación: ${new Date(file.lastModified).toLocaleString()}`;
+            if (editorBox) {
+                editorBox.classList.add('hidden');
+                editorBox.style.display = 'none';
+            }
         }
+    }
+
+    window.sanitizePdfMetadata = async function() {
+        if (!currentLoadedArrayBuffer || !currentLoadedFile) {
+            alert('Por favor selecciona un archivo PDF primero.');
+            return;
+        }
+
+        try {
+            const { PDFDocument } = window.PDFLib;
+            const pdfDoc = await PDFDocument.load(currentLoadedArrayBuffer);
+
+            // Borrar metadatos
+            pdfDoc.setTitle('');
+            pdfDoc.setAuthor('');
+            pdfDoc.setSubject('');
+            pdfDoc.setKeywords([]);
+            pdfDoc.setProducer('Yeib Tools Sanitizer');
+            pdfDoc.setCreator('Yeib Tools (Client-Side Safe)');
+            pdfDoc.setCreationDate(new Date());
+            pdfDoc.setModificationDate(new Date());
+
+            const pdfBytes = await pdfDoc.save();
+            downloadBlob(pdfBytes, 'documento_sanitizado_yeib.pdf', 'application/pdf');
+
+            alert('🧹 ¡Metadatos eliminados con éxito! Se ha descargado tu PDF 100% sanitizado sin dejar rastro.');
+        } catch (e) {
+            alert('Error al sanitizar metadatos del PDF. Asegúrate de que no esté protegido por contraseña.');
+        }
+    };
+
+    window.savePdfMetadata = async function() {
+        if (!currentLoadedArrayBuffer || !currentLoadedFile) {
+            alert('Por favor selecciona un archivo PDF primero.');
+            return;
+        }
+
+        const author = document.getElementById('meta-input-author').value.trim();
+        const title = document.getElementById('meta-input-title').value.trim();
+        const creator = document.getElementById('meta-input-creator').value.trim();
+
+        try {
+            const { PDFDocument } = window.PDFLib;
+            const pdfDoc = await PDFDocument.load(currentLoadedArrayBuffer);
+
+            pdfDoc.setAuthor(author);
+            pdfDoc.setTitle(title);
+            pdfDoc.setCreator(creator);
+            pdfDoc.setProducer('Yeib Tools Client Engine');
+            pdfDoc.setModificationDate(new Date());
+
+            const pdfBytes = await pdfDoc.save();
+            downloadBlob(pdfBytes, 'pdf_editado_yeib.pdf', 'application/pdf');
+
+            alert('💾 ¡Metadatos actualizados con éxito! Se ha descargado tu nuevo PDF.');
+        } catch (e) {
+            alert('Error al guardar metadatos en el PDF.');
+        }
+    };
+
+    function downloadBlob(bytes, filename, mimeType) {
+        const blob = new Blob([bytes], { type: mimeType });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
     }
 
     function extractPdfMetadata(text, file) {
@@ -362,12 +461,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.strokeStyle = '#0d9488';
             ctx.stroke();
 
-            // 5b. Dibujar Isotipo Oficial de Yeib (Ondas Teal e Indigo con Esferas)
+            // 5b. Dibujar Isotipo Oficial de Yeib
             const iconSize = logoRadius * 1.35;
             const iconX = center - iconSize / 2;
             const iconY = center - iconSize / 2;
 
-            // Renderizar SVG del Logo Yeib en canvas
             const svgData = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d9488"/><stop offset="100%" stop-color="#6366f1"/></linearGradient><path d="M4 24C9 24 11 12 16 12C21 12 23 6 28 6" stroke="url(#g)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="12" r="3" fill="#0d9488" stroke="#ffffff" stroke-width="2"/><circle cx="28" cy="6" r="3" fill="#6366f1" stroke="#ffffff" stroke-width="2"/><path d="M4 24H28" stroke="#0d9488" stroke-width="2" stroke-linecap="round"/></svg>`;
 
             const img = new Image();

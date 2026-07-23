@@ -23,9 +23,10 @@ $version = time();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luxurious+Script&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS & Alpine.js -->
+    <!-- Tailwind CSS, Alpine.js & PDF-Lib Client Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -239,13 +240,13 @@ $version = time();
                     </div>
                 </div>
 
-                <!-- PANEL 2: METADATOS FORENSES -->
+                <!-- PANEL 2: METADATOS FORENSES & EDITOR -->
                 <div id="panel-metadata" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🕵️‍♂️</span> <span data-i18n="meta_title">Lector de Metadatos Forenses (EXIF & PDF)</span>
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🕵️‍♂️</span> <span data-i18n="meta_title">Lector y Editor Forense de Metadatos (EXIF & PDF)</span>
                         </h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="meta_subtitle">Inspecciona autor, software, modelo de cámara, fechas e información oculta localmente.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="meta_subtitle">Inspecciona, modifica o borra datos ocultos (Autor, GPS, Software) 100% en tu navegador.</p>
                     </div>
 
                     <div class="border-2 border-dashed border-teal-500/30 hover:border-yeib-teal bg-slate-50 dark:bg-slate-900/40 rounded-3xl p-10 text-center cursor-pointer transition-all group" id="metadata-dropzone">
@@ -256,12 +257,43 @@ $version = time();
                     </div>
 
                     <div class="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-2xl text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-2">
-                        <span data-i18n="meta_security">🔒 <strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. Ningún byte sale hacia el servidor.</span>
+                        <span data-i18n="meta_security">🔒 <strong>Seguridad Extrema:</strong> El archivo se procesa localmente en la memoria RAM de tu dispositivo. Cero bytes subidos a la VPS.</span>
                     </div>
 
-                    <div id="metadata-result" class="hidden space-y-3">
+                    <!-- MUESTRA DE RESULTADOS & METADATOS EXTRAÍDOS -->
+                    <div id="metadata-result" class="hidden space-y-4">
                         <h4 id="metadata-filename" class="text-xs font-black uppercase text-yeib-teal"></h4>
-                        <div id="metadata-output" class="bg-slate-100 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-300 max-h-96 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
+                        <div id="metadata-output" class="bg-slate-100 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-300 max-h-80 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
+
+                        <!-- PANEL DE EDICIÓN & SANITIZACIÓN CLIENT-SIDE -->
+                        <div id="metadata-editor-box" class="hidden bg-slate-50 dark:bg-slate-900/80 p-6 rounded-3xl border border-slate-200 dark:border-slate-700/70 space-y-4">
+                            <h3 class="text-sm font-black uppercase text-slate-900 dark:text-white tracking-wider flex items-center gap-2" data-i18n="meta_editor_title">
+                                🛠️ Editor & Sanitizador de Metadatos
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1" data-i18n="meta_author_label">Nombre de Autor</label>
+                                    <input type="text" id="meta-input-author" placeholder="Ej: Yeib" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:outline-none" />
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1" data-i18n="meta_title_label">Título del Documento</label>
+                                    <input type="text" id="meta-input-title" placeholder="Ej: Documento Oficial" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:outline-none" />
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1" data-i18n="meta_creator_label">Software / Creador</label>
+                                    <input type="text" id="meta-input-creator" placeholder="Ej: Yeib Tools PDF Sanitizer" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:outline-none" />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-3 pt-2">
+                                <button type="button" onclick="sanitizePdfMetadata()" class="px-5 py-3 bg-rose-600 hover:bg-rose-500 text-white font-black text-xs uppercase rounded-xl transition-all shadow-md active:scale-95 cursor-pointer" data-i18n="meta_btn_sanitize">
+                                    🧹 Borrar Todos los Metadatos Ocultos
+                                </button>
+                                <button type="button" onclick="savePdfMetadata()" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-xl transition-all shadow-md active:scale-95 cursor-pointer" data-i18n="meta_btn_save">
+                                    💾 Guardar & Descargar PDF Sanitizado
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

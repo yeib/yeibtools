@@ -26,12 +26,19 @@ const translations = {
         yt_copy_plain: "📄 Solo Texto",
         yt_download: "📥 Descargar .TXT",
 
-        // Metadatos Forenses
-        meta_title: "Lector de Metadatos Forenses (EXIF & PDF)",
-        meta_subtitle: "Inspecciona autor, software, modelo de cámara, fechas e información oculta localmente.",
+        // Metadatos Forenses & Editor
+        meta_title: "Lector y Editor Forense de Metadatos (EXIF & PDF)",
+        meta_subtitle: "Inspecciona, modifica o borra datos ocultos (Autor, GPS, Software) 100% en tu navegador.",
         meta_drop_title: "Arrastra tu archivo aquí o haz clic para examinar",
         meta_drop_subtitle: "Soporta imágenes (JPG, PNG, WEBP) y documentos PDF.",
-        meta_security: "🔒 <strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. Ningún byte sale hacia el servidor.",
+        meta_security: "🔒 <strong>Seguridad Extrema:</strong> El archivo se procesa localmente en la memoria RAM de tu dispositivo. Cero bytes subidos a la VPS.",
+
+        meta_editor_title: "🛠️ Editor & Sanitizador de Metadatos",
+        meta_author_label: "Nombre de Autor",
+        meta_title_label: "Título del Documento",
+        meta_creator_label: "Software / Creador",
+        meta_btn_sanitize: "🧹 Borrar Todos los Metadatos Ocultos",
+        meta_btn_save: "💾 Guardar & Descargar PDF Sanitizado",
 
         // Código QR
         qr_title: "Generador de Código QR Personalizado",
@@ -108,12 +115,19 @@ const translations = {
         yt_copy_plain: "📄 Plain Text",
         yt_download: "📥 Download .TXT",
 
-        // Metadatos Forenses
-        meta_title: "Forensic Metadata Reader (EXIF & PDF)",
-        meta_subtitle: "Inspect author, software, camera model, dates and hidden info locally.",
+        // Metadatos Forenses & Editor
+        meta_title: "Forensic Metadata Reader & Editor (EXIF & PDF)",
+        meta_subtitle: "Inspect, modify or wipe hidden data (Author, GPS, Software) 100% inside your browser.",
         meta_drop_title: "Drag your file here or click to browse",
         meta_drop_subtitle: "Supports images (JPG, PNG, WEBP) and PDF documents.",
-        meta_security: "🔒 <strong>Extreme Security:</strong> File is read locally from your device memory. Zero bytes leave for the server.",
+        meta_security: "🔒 <strong>Extreme Security:</strong> File is processed locally inside your device RAM. Zero bytes uploaded to VPS.",
+
+        meta_editor_title: "🛠️ Metadata Editor & Sanitizer",
+        meta_author_label: "Author Name",
+        meta_title_label: "Document Title",
+        meta_creator_label: "Software / Creator",
+        meta_btn_sanitize: "🧹 Wipe All Hidden Metadata",
+        meta_btn_save: "💾 Save & Download Sanitized PDF",
 
         // Código QR
         qr_title: "Custom QR Code Generator",
