@@ -163,8 +163,9 @@ $version = time();
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 
-    <!-- Favicon SVG Yeib -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22 fill=%22none%22><linearGradient id=%22yeibGrad%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 stop-color=%22%230d9488%22 /><stop offset=%22100%25%22 stop-color=%22%236366f1%22 /></linearGradient><path d=%22M4 24C9 24 11 12 16 12C21 12 23 6 28 6%22 stroke=%22url(%23yeibGrad)%22 stroke-width=%223.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><circle cx=%2216%22 cy=%2212%22 r=%223%22 fill=%22%230d9488%22 stroke=%22%23ffffff%22 stroke-width=%222%22/><circle cx=%2228%22 cy=%226%22 r=%223%22 fill=%22%236366f1%22 stroke=%22%23ffffff%22 stroke-width=%222%22/></svg>">
+    <!-- Favicon Físico para Googlebot Favicon Crawler -->
+    <link rel="icon" type="image/svg+xml" href="https://tools.yeib.cl/assets/img/favicon.svg">
+    <link rel="alternate icon" type="image/svg+xml" href="https://tools.yeib.cl/favicon.svg">
 </head>
 <body class="h-full font-sans antialiased text-slate-800 dark:text-slate-200 bg-gradient-to-br from-slate-100 via-teal-50/20 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 selection:bg-teal-500 selection:text-white flex flex-col min-h-screen transition-colors duration-300">
 
