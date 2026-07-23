@@ -245,7 +245,7 @@ $version = time();
                     </button>
                 </div>
 
-                <!-- PANEL 1: TRANSCRIPTOR YOUTUBE -->
+                <!-- PANEL 1: TRANSCRIPTOR YOUTUBE CON PROMPT IA, BUSCADOR Y PÁRRAFOS -->
                 <div id="panel-youtube" class="tool-panel bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
@@ -264,14 +264,25 @@ $version = time();
                     <div id="yt-status" class="hidden"></div>
 
                     <div id="yt-result" class="hidden space-y-4 pt-2">
-                        <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-100 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/50">
+                        <!-- META Y BUSCADOR INTERNO DE PALABRAS -->
+                        <div class="flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-100 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/50">
                             <span id="yt-meta-info" class="text-xs font-black text-yeib-teal uppercase"></span>
-                            <div class="flex flex-wrap gap-2">
-                                <button type="button" onclick="copyYtText('full')" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_full">📋 Con Tiempos</button>
-                                <button type="button" onclick="copyYtText('plain')" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_plain">📄 Solo Texto</button>
-                                <button type="button" onclick="downloadYtText()" class="px-3 py-1.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_download">📥 Descargar .TXT</button>
+                            <div class="w-full sm:w-64">
+                                <input type="text" id="yt-search-input" oninput="filterYtText()" data-i18n="yt_search_placeholder" placeholder="🔍 Buscar palabra en transcripción..." class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white focus:outline-none font-medium" />
                             </div>
                         </div>
+
+                        <!-- BARRA DE ACCIONES: PROMPT IA, FORMATOS Y DESCARGAS (.TXT & .MD) -->
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <button type="button" onclick="copyYtPrompt()" class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white text-[10px] font-black uppercase rounded-xl transition-all shadow-md cursor-pointer" data-i18n="yt_copy_prompt">🤖 Copiar Prompt para tu IA</button>
+                            <button type="button" onclick="toggleYtFormat('full')" id="yt-fmt-full" class="px-3 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_full">📋 Con Tiempos</button>
+                            <button type="button" onclick="toggleYtFormat('plain')" id="yt-fmt-plain" class="px-3 py-2 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_plain">📄 Solo Texto</button>
+                            <button type="button" onclick="toggleYtFormat('paragraphs')" id="yt-fmt-paragraphs" class="px-3 py-2 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_paragraphs">📖 Párrafos Fluídos</button>
+                            <button type="button" onclick="downloadYtText('txt')" class="px-3 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer ml-auto" data-i18n="yt_download_txt">📥 Descargar .TXT</button>
+                            <button type="button" onclick="downloadYtText('md')" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_download_md">📝 Descargar .MD</button>
+                        </div>
+
+                        <!-- VISUALIZADOR DE TEXTO -->
                         <div id="yt-raw-text" class="bg-slate-100 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-300 max-h-96 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
                     </div>
                 </div>

@@ -22,9 +22,13 @@ const translations = {
         yt_label: "Ingresa la URL o ID del Video",
         yt_placeholder: "Ej: https://www.youtube.com/watch?v=jNQXAC9IVRw",
         yt_btn: "⚡ Obtener Transcripción",
+        yt_copy_prompt: "🤖 Copiar Prompt para tu IA",
         yt_copy_full: "📋 Con Tiempos",
         yt_copy_plain: "📄 Solo Texto",
-        yt_download: "📥 Descargar .TXT",
+        yt_copy_paragraphs: "📖 Párrafos Fluídos",
+        yt_search_placeholder: "🔍 Buscar palabra en la transcripción...",
+        yt_download_txt: "📥 Descargar .TXT",
+        yt_download_md: "📝 Descargar .MD",
 
         // Metadatos Forenses & Editor
         meta_title: "Lector y Editor Forense de Metadatos (EXIF & PDF)",
@@ -114,9 +118,13 @@ const translations = {
         yt_label: "Enter Video URL or YouTube ID",
         yt_placeholder: "Ex: https://www.youtube.com/watch?v=jNQXAC9IVRw",
         yt_btn: "⚡ Get Transcript",
+        yt_copy_prompt: "🤖 Copy Prompt for your AI",
         yt_copy_full: "📋 With Timestamps",
         yt_copy_plain: "📄 Plain Text",
-        yt_download: "📥 Download .TXT",
+        yt_copy_paragraphs: "📖 Fluent Paragraphs",
+        yt_search_placeholder: "🔍 Search word in transcript...",
+        yt_download_txt: "📥 Download .TXT",
+        yt_download_md: "📝 Download .MD",
 
         // Metadatos Forenses & Editor
         meta_title: "Forensic Metadata Reader & Editor (EXIF & PDF)",

@@ -80,14 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ensure YouTube tab is visible on start
     window.switchTool('youtube');
 
-    // --- 1. YOUTUBE TRANSCRIPT ---
-    let currentTranscriptText = '';
+    // --- 1. YOUTUBE TRANSCRIPT AVANZADO ---
+    let currentRawTranscript = '';
+    let currentVideoId = '';
+    let currentFormatMode = 'full';
 
     window.fetchTranscript = async function() {
         const input = document.getElementById('yt-input').value.trim();
         const statusBox = document.getElementById('yt-status');
         const resultBox = document.getElementById('yt-result');
-        const textContainer = document.getElementById('yt-raw-text');
 
         if (!input) {
             alert('Por favor ingresa una URL de YouTube.');
@@ -110,10 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultBox.classList.remove('hidden');
                 resultBox.style.display = 'block';
                 
-                currentTranscriptText = data.raw_text;
-                textContainer.innerText = data.raw_text;
+                currentRawTranscript = data.raw_text;
+                currentVideoId = data.video_id;
 
-                document.getElementById('yt-meta-info').innerText = `Total de líneas: ${data.total_lines} | ID Video: ${data.video_id}`;
+                document.getElementById('yt-meta-info').innerText = `Líneas: ${data.total_lines} | Video ID: ${data.video_id}`;
+                toggleYtFormat('full');
             } else {
                 statusBox.innerHTML = `<div class="p-3 bg-rose-500/10 text-rose-500 rounded-xl font-bold text-xs">✕ Error: ${data.error}</div>`;
             }
@@ -122,23 +124,97 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.copyYtText = function(type) {
-        if (!currentTranscriptText) return;
-        let textToCopy = currentTranscriptText;
-        if (type === 'plain') {
-            textToCopy = currentTranscriptText.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '');
+    window.toggleYtFormat = function(mode) {
+        currentFormatMode = mode;
+        const textContainer = document.getElementById('yt-raw-text');
+        if (!currentRawTranscript) return;
+
+        let formattedText = currentRawTranscript;
+
+        if (mode === 'plain') {
+            formattedText = currentRawTranscript.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '');
+        } else if (mode === 'paragraphs') {
+            const lines = currentRawTranscript.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '').split('\n');
+            let paragraphs = [];
+            let currentP = [];
+
+            lines.forEach((line, index) => {
+                const trimmed = line.trim();
+                if (trimmed) {
+                    currentP.push(trimmed);
+                    if (currentP.length >= 4 || index === lines.length - 1) {
+                        paragraphs.push(currentP.join(' '));
+                        currentP = [];
+                    }
+                }
+            });
+            formattedText = paragraphs.join('\n\n');
         }
-        navigator.clipboard.writeText(textToCopy);
-        alert('¡Transcripción copiada al portapapeles!');
+
+        textContainer.innerText = formattedText;
+        updateFormatButtonStyles(mode);
+        filterYtText();
     };
 
-    window.downloadYtText = function() {
-        if (!currentTranscriptText) return;
-        const blob = new Blob([currentTranscriptText], { type: 'text/plain;charset=utf-8' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'transcripcion_youtube.txt';
-        a.click();
+    function updateFormatButtonStyles(mode) {
+        const btnFull = document.getElementById('yt-fmt-full');
+        const btnPlain = document.getElementById('yt-fmt-plain');
+        const btnPar = document.getElementById('yt-fmt-paragraphs');
+
+        const activeCls = "px-3 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer shadow-sm";
+        const inactiveCls = "px-3 py-2 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600";
+
+        if (btnFull) btnFull.className = mode === 'full' ? activeCls : inactiveCls;
+        if (btnPlain) btnPlain.className = mode === 'plain' ? activeCls : inactiveCls;
+        if (btnPar) btnPar.className = mode === 'paragraphs' ? activeCls : inactiveCls;
+    }
+
+    window.copyYtPrompt = function() {
+        if (!currentRawTranscript) return;
+        const plainText = currentRawTranscript.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '');
+        const prompt = `Analiza la siguiente transcripción de video de YouTube y genera un resumen ejecutivo claro con los 5 puntos clave principales:\n\n${plainText}`;
+        
+        navigator.clipboard.writeText(prompt);
+        alert('🤖 ¡Prompt con la transcripción copiado al portapapeles! Ya puedes pegarlo directamente en tu IA.');
+    };
+
+    window.filterYtText = function() {
+        const query = document.getElementById('yt-search-input').value.toLowerCase().trim();
+        const textContainer = document.getElementById('yt-raw-text');
+
+        if (!query) {
+            return;
+        }
+
+        const lines = textContainer.innerText.split('\n');
+        const highlighted = lines.map(line => {
+            if (line.toLowerCase().includes(query)) {
+                return `👉 ${line}`;
+            }
+            return line;
+        }).join('\n');
+
+        textContainer.innerText = highlighted;
+    };
+
+    window.downloadYtText = function(format) {
+        if (!currentRawTranscript) return;
+
+        let content = '';
+        let filename = '';
+        let mime = 'text/plain;charset=utf-8';
+
+        if (format === 'md') {
+            const plainText = currentRawTranscript.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '');
+            content = `# Transcripción de Video YouTube (${currentVideoId})\n\n> Generado libre de rastreo por [Yeib Tools](https://tools.yeib.cl/)\n\n## Texto Completo\n\n${plainText}`;
+            filename = `transcripcion_${currentVideoId}.md`;
+            mime = 'text/markdown;charset=utf-8';
+        } else {
+            content = currentRawTranscript;
+            filename = `transcripcion_${currentVideoId}.txt`;
+        }
+
+        downloadBlob(new TextEncoder().encode(content), filename, mime);
     };
 
 
@@ -209,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let title = '', author = '', subject = '', creator = '', producer = '', creationDate = '', modDate = '';
 
-                // Intento 1: Usar PDFLib para decodificación limpia de UTF-16BE / PDFDocEncoding
                 try {
                     const { PDFDocument } = window.PDFLib;
                     const pdfDoc = await PDFDocument.load(currentLoadedArrayBuffer, { ignoreEncryption: true });
@@ -228,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('PDFLib fallback to regex parsing');
                 }
 
-                // Intento 2: Fallback por regex si PDFLib no trajo algún campo
                 const textReader = new FileReader();
                 textReader.onload = function(evt) {
                     const rawText = evt.target.result;
@@ -263,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     output.innerText = formatMetadataJson(finalMeta);
 
-                    // Precargar los campos limpios en la interfaz del editor
                     document.getElementById('meta-input-author').value = author;
                     document.getElementById('meta-input-title').value = title;
                     document.getElementById('meta-input-subject').value = subject;
