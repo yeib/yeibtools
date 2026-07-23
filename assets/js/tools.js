@@ -176,7 +176,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function processLocalFile(file) {
+    function cleanPdfString(str) {
+        if (!str) return '';
+        let cleaned = str.replace(/\uFEFF/g, ''); // Remover BOM UTF-16
+        if (cleaned.includes('\0')) {
+            cleaned = cleaned.replace(/\0/g, ''); // Remover bytes nulos intercalados
+        }
+        cleaned = cleaned.replace(/^\((.*)\)$/, '$1');
+        cleaned = cleaned.replace(/[\x00-\x1F\x7F-\x9F]/g, ''); // Control chars
+        cleaned = cleaned.replace(/\uFFFD/g, ''); // Unicode replacement char 
+        return cleaned.trim();
+    }
+
+    async function processLocalFile(file) {
         currentLoadedFile = file;
 
         const resultBox = document.getElementById('metadata-result');
@@ -192,31 +204,78 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
 
         if (file.type === 'application/pdf') {
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 currentLoadedArrayBuffer = e.target.result;
 
-                // Lectura rápida de cabeceras
+                let title = '', author = '', subject = '', creator = '', producer = '', creationDate = '', modDate = '';
+
+                // Intento 1: Usar PDFLib para decodificación limpia de UTF-16BE / PDFDocEncoding
+                try {
+                    const { PDFDocument } = window.PDFLib;
+                    const pdfDoc = await PDFDocument.load(currentLoadedArrayBuffer, { ignoreEncryption: true });
+                    
+                    title = cleanPdfString(pdfDoc.getTitle() || '');
+                    author = cleanPdfString(pdfDoc.getAuthor() || '');
+                    subject = cleanPdfString(pdfDoc.getSubject() || '');
+                    creator = cleanPdfString(pdfDoc.getCreator() || '');
+                    producer = cleanPdfString(pdfDoc.getProducer() || '');
+
+                    const cDate = pdfDoc.getCreationDate();
+                    if (cDate) creationDate = cDate.toISOString();
+                    const mDate = pdfDoc.getModificationDate();
+                    if (mDate) modDate = mDate.toISOString();
+                } catch (err) {
+                    console.log('PDFLib fallback to regex parsing');
+                }
+
+                // Intento 2: Fallback por regex si PDFLib no trajo algún campo
                 const textReader = new FileReader();
                 textReader.onload = function(evt) {
-                    const metadata = extractPdfMetadata(evt.target.result, file);
-                    output.innerText = formatMetadataJson(metadata);
+                    const rawText = evt.target.result;
+                    const metaRegex = extractPdfMetadata(rawText, file);
 
-                    // Precargar los 6 campos detectados en la interfaz del editor
-                    if (metadata["Metadatos Internos PDF"]) {
-                        const pdfMeta = metadata["Metadatos Internos PDF"];
-                        document.getElementById('meta-input-author').value = pdfMeta["Autor"] || '';
-                        document.getElementById('meta-input-title').value = pdfMeta["Título"] || '';
-                        document.getElementById('meta-input-subject').value = pdfMeta["Asunto"] || '';
-                        document.getElementById('meta-input-creator').value = pdfMeta["Creador / Software"] || '';
-                        document.getElementById('meta-input-producer').value = pdfMeta["Productor PDF"] || '';
+                    if (metaRegex["Metadatos Internos PDF"]) {
+                        const pdfMeta = metaRegex["Metadatos Internos PDF"];
+                        if (!title) title = cleanPdfString(pdfMeta["Título"]);
+                        if (!author) author = cleanPdfString(pdfMeta["Autor"]);
+                        if (!subject) subject = cleanPdfString(pdfMeta["Asunto"]);
+                        if (!creator) creator = cleanPdfString(pdfMeta["Creador / Software"]);
+                        if (!producer) producer = cleanPdfString(pdfMeta["Productor PDF"]);
+                        if (!creationDate) creationDate = cleanPdfString(pdfMeta["Fecha Creación PDF"]);
+                        if (!modDate) modDate = cleanPdfString(pdfMeta["Fecha Modificación PDF"]);
                     }
+
+                    const finalMeta = {
+                        "Archivo": file.name,
+                        "Tamaño": `${(file.size / 1024).toFixed(2)} KB`,
+                        "Tipo MIME": file.type,
+                        "Última Modificación Local": new Date(file.lastModified).toISOString(),
+                        "Metadatos Internos PDF": {
+                            "Título": title || "No especificado",
+                            "Autor": author || "No especificado",
+                            "Asunto": subject || "No especificado",
+                            "Creador / Software": creator || "No especificado",
+                            "Productor PDF": producer || "No especificado",
+                            "Fecha Creación PDF": creationDate || "No especificada",
+                            "Fecha Modificación PDF": modDate || "No especificada"
+                        }
+                    };
+
+                    output.innerText = formatMetadataJson(finalMeta);
+
+                    // Precargar los campos limpios en la interfaz del editor
+                    document.getElementById('meta-input-author').value = author;
+                    document.getElementById('meta-input-title').value = title;
+                    document.getElementById('meta-input-subject').value = subject;
+                    document.getElementById('meta-input-creator').value = creator;
+                    document.getElementById('meta-input-producer').value = producer;
 
                     if (editorBox) {
                         editorBox.classList.remove('hidden');
                         editorBox.style.display = 'block';
                     }
                 };
-                textReader.readAsText(file.slice(0, 100000));
+                textReader.readAsText(file.slice(0, 150000));
             };
             reader.readAsArrayBuffer(file);
         } else if (file.type.startsWith('image/')) {
@@ -250,7 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const { PDFDocument } = window.PDFLib;
             const pdfDoc = await PDFDocument.load(currentLoadedArrayBuffer);
 
-            // Limpieza y blanqueado completo de datos sensibles y fechas
             pdfDoc.setTitle('');
             pdfDoc.setAuthor('');
             pdfDoc.setSubject('');
@@ -292,7 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
             pdfDoc.setCreator(creator);
             if (producer) pdfDoc.setProducer(producer);
 
-            // Edición de Fecha de Creación y Modificación
             if (customDate) {
                 const dateObj = new Date(customDate);
                 pdfDoc.setCreationDate(dateObj);
@@ -337,13 +394,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const version = text.match(/%PDF-1\.\d/);
 
         if (version) meta["Metadatos Internos PDF"]["Versión PDF"] = version[0];
-        if (title) meta["Metadatos Internos PDF"]["Título"] = title[1];
-        if (author) meta["Metadatos Internos PDF"]["Autor"] = author[1];
-        if (subject) meta["Metadatos Internos PDF"]["Asunto"] = subject[1];
-        if (creator) meta["Metadatos Internos PDF"]["Creador / Software"] = creator[1];
-        if (producer) meta["Metadatos Internos PDF"]["Productor PDF"] = producer[1];
-        if (creationDate) meta["Metadatos Internos PDF"]["Fecha Creación PDF"] = creationDate[1];
-        if (modDate) meta["Metadatos Internos PDF"]["Fecha Modificación PDF"] = modDate[1];
+        if (title) meta["Metadatos Internos PDF"]["Título"] = cleanPdfString(title[1]);
+        if (author) meta["Metadatos Internos PDF"]["Autor"] = cleanPdfString(author[1]);
+        if (subject) meta["Metadatos Internos PDF"]["Asunto"] = cleanPdfString(subject[1]);
+        if (creator) meta["Metadatos Internos PDF"]["Creador / Software"] = cleanPdfString(creator[1]);
+        if (producer) meta["Metadatos Internos PDF"]["Productor PDF"] = cleanPdfString(producer[1]);
+        if (creationDate) meta["Metadatos Internos PDF"]["Fecha Creación PDF"] = cleanPdfString(creationDate[1]);
+        if (modDate) meta["Metadatos Internos PDF"]["Fecha Modificación PDF"] = cleanPdfString(modDate[1]);
 
         const pageMatches = text.match(/\/Type\s*\/Page\b/g);
         if (pageMatches) {
@@ -405,7 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = '<div class="p-4 text-xs font-bold text-teal-500 animate-pulse">⚡ Renderizando QR HD con marca Yeib...</div>';
 
-        // 1. Generar matriz de datos QR con Error Correction High (Level 3 - H 30%)
         const qrModel = new QRCode(-1, 3); // Error Correction H = 3
         qrModel.addData(text);
         qrModel.make();
@@ -421,7 +477,6 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.className = "w-64 h-64 sm:w-72 sm:h-72 rounded-3xl border-2 border-slate-200 dark:border-slate-700 shadow-2xl transition-all hover:scale-105";
         const ctx = canvas.getContext('2d');
 
-        // 2. Pintar Fondo
         if (bgStyle === 'light') {
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvasSize, canvasSize);
@@ -429,15 +484,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillStyle = '#0f172a';
             ctx.fillRect(0, 0, canvasSize, canvasSize);
         } else {
-            ctx.clearRect(0, 0, canvasSize, canvasSize); // Transparente
+            ctx.clearRect(0, 0, canvasSize, canvasSize);
         }
 
-        // 3. Crear Gradiente / Color de Módulos (Dots)
         let moduleFill;
         if (colorStyle === 'teal') {
             const grad = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
-            grad.addColorStop(0, '#0d9488'); // Yeib Teal
-            grad.addColorStop(1, '#6366f1'); // Yeib Indigo
+            grad.addColorStop(0, '#0d9488');
+            grad.addColorStop(1, '#6366f1');
             moduleFill = grad;
         } else if (colorStyle === 'indigo') {
             moduleFill = '#4f46e5';
@@ -446,10 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (colorStyle === 'emerald') {
             moduleFill = '#059669';
         } else {
-            moduleFill = bgStyle === 'dark' ? '#f8fafc' : '#090d16'; // Negro / Blanco sólido
+            moduleFill = bgStyle === 'dark' ? '#f8fafc' : '#090d16';
         }
 
-        // 4. Dibujar Módulos del QR con bordes redondeados
         ctx.fillStyle = moduleFill;
         for (let row = 0; row < count; row++) {
             for (let col = 0; col < count; col++) {
@@ -464,12 +517,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 5. Incrustar Logo Oficial Yeib en el centro (si está activado)
         if (includeYeibLogo) {
             const center = canvasSize / 2;
-            const logoRadius = canvasSize * 0.13; // 13% del QR
+            const logoRadius = canvasSize * 0.13;
 
-            // 5a. Fondo circular blanco u oscuro de protección para la marca
             ctx.beginPath();
             ctx.arc(center, center, logoRadius + 12, 0, Math.PI * 2);
             ctx.fillStyle = bgStyle === 'dark' ? '#0f172a' : '#ffffff';
@@ -478,7 +529,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.strokeStyle = '#0d9488';
             ctx.stroke();
 
-            // 5b. Dibujar Isotipo Oficial de Yeib
             const iconSize = logoRadius * 1.35;
             const iconX = center - iconSize / 2;
             const iconY = center - iconSize / 2;
