@@ -22,6 +22,7 @@ $version = time();
     <meta property="og:description" content="Transcriptor de YouTube con prompt IA, Editor de Metadatos PDF/EXIF en cliente, Generador QR HD y utilidades de productividad sin subir archivos al servidor.">
     <meta property="og:site_name" content="Yeib Tools">
     <meta property="og:image" content="https://tools.yeib.cl/assets/img/og-preview.jpg">
+    <meta property="og:image:secure_url" content="https://tools.yeib.cl/assets/img/og-preview.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/jpeg">
