@@ -32,13 +32,16 @@ window.toggleTheme = function() {
     }
 };
 
-// Switch Tabs Engine (Tailwind & i18n compatible)
+// Switch Tabs Engine (Direct inline style + class toggle for 100% reliability)
 window.switchTool = function(toolId) {
     // Hide all panels
     const panels = document.querySelectorAll('.tool-panel');
-    panels.forEach(p => p.classList.add('hidden'));
+    panels.forEach(p => {
+        p.classList.add('hidden');
+        p.style.display = 'none';
+    });
 
-    // Reset button styles
+    // Reset all tab button styles
     const buttons = document.querySelectorAll('.tool-tab-btn');
     buttons.forEach(b => {
         b.classList.remove('bg-yeib-teal', 'text-white', 'border-transparent', 'shadow-md');
@@ -49,9 +52,10 @@ window.switchTool = function(toolId) {
     const targetPanel = document.getElementById('panel-' + toolId);
     if (targetPanel) {
         targetPanel.classList.remove('hidden');
+        targetPanel.style.display = 'block';
     }
 
-    // Highlight active button
+    // Highlight active tab button
     const targetBtn = document.getElementById('btn-tab-' + toolId);
     if (targetBtn) {
         targetBtn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700/60');
@@ -61,6 +65,21 @@ window.switchTool = function(toolId) {
 
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
+
+    // Attach click listeners to tab buttons as fallback
+    const tabBtns = document.querySelectorAll('.tool-tab-btn');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const btnId = btn.id || '';
+            const toolId = btnId.replace('btn-tab-', '');
+            if (toolId) {
+                window.switchTool(toolId);
+            }
+        });
+    });
+
+    // Ensure YouTube tab is visible initially
+    window.switchTool('youtube');
 
     // --- 1. YOUTUBE TRANSCRIPT ---
     let currentTranscriptText = '';
@@ -77,8 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         statusBox.classList.remove('hidden');
+        statusBox.style.display = 'block';
         statusBox.innerHTML = '<div class="p-3 bg-teal-500/10 text-yeib-teal rounded-xl font-bold text-xs">⚡ Procesando transcripción mediante proxy SOCKS5...</div>';
         resultBox.classList.add('hidden');
+        resultBox.style.display = 'none';
 
         try {
             const resp = await fetch('api/transcript.php?url=' + encodeURIComponent(input));
@@ -86,7 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.success) {
                 statusBox.classList.add('hidden');
+                statusBox.style.display = 'none';
                 resultBox.classList.remove('hidden');
+                resultBox.style.display = 'block';
                 
                 currentTranscriptText = data.raw_text;
                 textContainer.innerText = data.raw_text;
@@ -157,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fileNameTag = document.getElementById('metadata-filename');
 
         resultBox.classList.remove('hidden');
+        resultBox.style.display = 'block';
         fileNameTag.innerText = `📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
         output.innerText = 'Analizando metadatos localmente en tu navegador...';
 
@@ -168,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const metadata = extractPdfMetadata(content, file);
                 output.innerText = formatMetadataJson(metadata);
             };
-            reader.readAsText(file.slice(0, 100000)); // Leer primeras 100KB del PDF
+            reader.readAsText(file.slice(0, 100000));
         } else if (file.type.startsWith('image/')) {
             reader.onload = function(e) {
                 const buffer = e.target.result;
@@ -304,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         linkInput.value = link;
         resultBox.classList.remove('hidden');
+        resultBox.style.display = 'block';
 
         document.getElementById('wa-test-btn').href = link;
     };
