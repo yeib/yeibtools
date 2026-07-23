@@ -1,6 +1,7 @@
 <?php
 // Yeib Tools - Portal Satélite de Micro-Herramientas Gratuitas
 // Arquitectura: PHP Puro, Cero Base de Datos, Cero Frameworks (Ultra Veloz)
+$version = time();
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-full dark scroll-smooth">
@@ -38,11 +39,63 @@
                 }
             }
         }
-        // Theme initialization to prevent FOUC
-        if (localStorage.getItem('yeib_tools_theme') === 'light') {
-            document.documentElement.classList.remove('dark');
-        } else {
-            document.documentElement.classList.add('dark');
+
+        // Theme Initialization inline to prevent FOUC
+        (function() {
+            var savedTheme = localStorage.getItem('yeib_tools_theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+
+        // Global Inline Functions for 100% Guaranteed Execution
+        function toggleTheme() {
+            var html = document.documentElement;
+            var btn = document.getElementById('theme-toggle-btn');
+            var isDark = html.classList.contains('dark');
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('yeib_tools_theme', 'light');
+                if (btn) btn.innerText = '🌙';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('yeib_tools_theme', 'dark');
+                if (btn) btn.innerText = '☀️';
+            }
+        }
+
+        function switchTool(toolId) {
+            if (!toolId) return;
+
+            // Hide all panels
+            var panels = document.querySelectorAll('.tool-panel');
+            for (var i = 0; i < panels.length; i++) {
+                panels[i].classList.add('hidden');
+                panels[i].style.display = 'none';
+            }
+
+            // Show target panel
+            var targetPanel = document.getElementById('panel-' + toolId);
+            if (targetPanel) {
+                targetPanel.classList.remove('hidden');
+                targetPanel.style.display = 'block';
+            }
+
+            // Update tab buttons styling
+            var activeClass = "tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer select-none";
+            var inactiveClass = "tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
+
+            var buttons = document.querySelectorAll('.tool-tab-btn');
+            for (var j = 0; j < buttons.length; j++) {
+                buttons[j].className = inactiveClass;
+            }
+
+            var targetBtn = document.getElementById('btn-tab-' + toolId);
+            if (targetBtn) {
+                targetBtn.className = activeClass;
+            }
         }
     </script>
     <style>
@@ -389,8 +442,8 @@
     </footer>
 
     <!-- LIBRERÍAS Y TAB SWITCHER SCRIPTS -->
-    <script src="assets/js/qrcode.min.js"></script>
-    <script src="assets/js/i18n.js"></script>
-    <script src="assets/js/tools.js"></script>
+    <script src="assets/js/qrcode.min.js?v=<?php echo $version; ?>"></script>
+    <script src="assets/js/i18n.js?v=<?php echo $version; ?>"></script>
+    <script src="assets/js/tools.js?v=<?php echo $version; ?>"></script>
 </body>
 </html>
