@@ -50,25 +50,6 @@
 </head>
 <body class="h-full font-sans antialiased text-slate-200 bg-slate-900 selection:bg-teal-500 selection:text-white flex flex-col min-h-screen">
 
-    <!-- CINTA SUPERIOR DELGADA DE DONACIONES (ESTILO FREEBLIOTECA) -->
-    <div class="bg-gradient-to-r from-teal-950 via-slate-900 to-indigo-950 border-b border-teal-900/40 py-2 px-4 z-[70]">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs gap-2">
-            <div class="flex items-center gap-2 text-slate-300 font-medium">
-                <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[9px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse">❤️ Apoyar Proyecto</span>
-                <span class="hidden sm:inline">¿Te sirvió alguna herramienta? Tu donación mantiene la infraestructura libre.</span>
-            </div>
-            <div class="flex items-center gap-3 font-bold text-[10px] uppercase">
-                <a href="https://link.mercadopago.cl/yeib" target="_blank" class="hover:text-teal-400 transition-colors flex items-center gap-1.5">
-                    <span class="bg-sky-500 text-white px-1.5 py-0.5 rounded text-[8px] font-black">MP</span> Mercado Pago
-                </a>
-                <span class="text-slate-600">•</span>
-                <a href="https://paypal.me/yeib22" target="_blank" class="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
-                    <span class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[8px] font-black">PP</span> PayPal
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- NAVBAR STICKY -->
     <nav class="bg-slate-800/95 border-b border-teal-900/50 sticky top-0 z-[60] backdrop-blur-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,21 +71,16 @@
                             <path d="M28 6V24" stroke="#6366f1" stroke-width="1" stroke-dasharray="2 2" stroke-linecap="round"/>
                             <path d="M4 24H28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
-                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-800 animate-pulse"></div>
                     </div>
                     <span class="text-xl font-black tracking-tighter text-yeib-teal uppercase">Yeib <span class="text-white font-light normal-case">Tools</span></span>
                 </a>
                 
-                <!-- Right Side Actions & Donate Dropdown -->
+                <!-- Right Side Actions: Donate Dropdown -->
                 <div class="flex items-center gap-4">
-                    <div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-[10px] font-black uppercase tracking-wider">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 100% Client-Side
-                    </div>
-
                     <!-- Donate Dropdown (Alpine.js) -->
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl hover:bg-teal-700 active:scale-95 transition-all shadow-lg">
-                            ❤️ <span class="hidden sm:inline">Donar</span>
+                            ❤️ <span>Donar</span>
                         </button>
                         <div x-show="open" x-cloak @click.away="open = false" x-transition class="absolute top-full mt-3 right-0 w-52 bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-2 z-[110]">
                             <a href="https://link.mercadopago.cl/yeib" target="_blank" class="flex items-center justify-between p-3 hover:bg-slate-700 rounded-xl text-[10px] font-black uppercase text-white transition-all">
