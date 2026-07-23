@@ -1,22 +1,66 @@
 /**
- * YEIB TOOLS - INTERACTVIDAD Y CLIENT-SIDE LOGIC
+ * YEIB TOOLS - INTERACTIVIDAD, THEME TOGGLE & CLIENT-SIDE LOGIC
  * Cero rastreo, cero procesamiento de archivos en backend
  */
 
+// Theme Engine (Dark / Light Mode)
+function initTheme() {
+    const savedTheme = localStorage.getItem('yeib_tools_theme') || 'dark';
+    const btn = document.getElementById('theme-toggle-btn');
+    
+    if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+        if (btn) btn.innerText = '🌙';
+    } else {
+        document.documentElement.classList.add('dark');
+        if (btn) btn.innerText = '☀️';
+    }
+}
+
+window.toggleTheme = function() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const btn = document.getElementById('theme-toggle-btn');
+    
+    if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('yeib_tools_theme', 'light');
+        if (btn) btn.innerText = '🌙';
+    } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('yeib_tools_theme', 'dark');
+        if (btn) btn.innerText = '☀️';
+    }
+};
+
+// Switch Tabs Engine (Tailwind & i18n compatible)
+window.switchTool = function(toolId) {
+    // Hide all panels
+    const panels = document.querySelectorAll('.tool-panel');
+    panels.forEach(p => p.classList.add('hidden'));
+
+    // Reset button styles
+    const buttons = document.querySelectorAll('.tool-tab-btn');
+    buttons.forEach(b => {
+        b.classList.remove('bg-yeib-teal', 'text-white', 'border-transparent', 'shadow-md');
+        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700/60');
+    });
+
+    // Show target panel
+    const targetPanel = document.getElementById('panel-' + toolId);
+    if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+    }
+
+    // Highlight active button
+    const targetBtn = document.getElementById('btn-tab-' + toolId);
+    if (targetBtn) {
+        targetBtn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700/60');
+        targetBtn.classList.add('bg-yeib-teal', 'text-white', 'border-transparent', 'shadow-md');
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Configurar Tabs
-    window.switchTool = function(toolId, btn) {
-        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        
-        const targetPanel = document.getElementById('panel-' + toolId);
-        if (targetPanel) {
-            targetPanel.classList.add('active');
-        }
-        if (btn) {
-            btn.classList.add('active');
-        }
-    };
+    initTheme();
 
     // --- 1. YOUTUBE TRANSCRIPT ---
     let currentTranscriptText = '';
@@ -33,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         statusBox.classList.remove('hidden');
-        statusBox.innerHTML = '<div class="privacy-pill"><span class="privacy-dot"></span> Procesando transcripción mediante proxy SOCKS5...</div>';
+        statusBox.innerHTML = '<div class="p-3 bg-teal-500/10 text-yeib-teal rounded-xl font-bold text-xs">⚡ Procesando transcripción mediante proxy SOCKS5...</div>';
         resultBox.classList.add('hidden');
 
         try {
@@ -49,10 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 document.getElementById('yt-meta-info').innerText = `Total de líneas: ${data.total_lines} | ID Video: ${data.video_id}`;
             } else {
-                statusBox.innerHTML = `<div style="color: var(--accent-rose); font-weight: 800;">✕ Error: ${data.error}</div>`;
+                statusBox.innerHTML = `<div class="p-3 bg-rose-500/10 text-rose-500 rounded-xl font-bold text-xs">✕ Error: ${data.error}</div>`;
             }
         } catch (err) {
-            statusBox.innerHTML = `<div style="color: var(--accent-rose); font-weight: 800;">✕ Error al conectar con la API de transcripción.</div>`;
+            statusBox.innerHTML = `<div class="p-3 bg-rose-500/10 text-rose-500 rounded-xl font-bold text-xs">✕ Error al conectar con la API de transcripción.</div>`;
         }
     };
 
@@ -85,16 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
-            dropzone.style.borderColor = 'var(--primary-teal)';
+            dropzone.classList.add('border-yeib-teal');
         });
 
         dropzone.addEventListener('dragleave', () => {
-            dropzone.style.borderColor = 'rgba(13, 148, 136, 0.4)';
+            dropzone.classList.remove('border-yeib-teal');
         });
 
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropzone.style.borderColor = 'rgba(13, 148, 136, 0.4)';
+            dropzone.classList.remove('border-yeib-teal');
             if (e.dataTransfer.files.length > 0) {
                 processLocalFile(e.dataTransfer.files[0]);
             }
@@ -162,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (creationDate) meta["Metadatos Internos PDF"]["Fecha Creación PDF"] = creationDate[1];
         if (modDate) meta["Metadatos Internos PDF"]["Fecha Modificación PDF"] = modDate[1];
 
-        // Contar páginas aproximadas
         const pageMatches = text.match(/\/Type\s*\/Page\b/g);
         if (pageMatches) {
             meta["Metadatos Internos PDF"]["Páginas Estimadas"] = pageMatches.length;
@@ -181,13 +224,12 @@ document.addEventListener('DOMContentLoaded', () => {
             "Metadatos EXIF / Cabeceras": {}
         };
 
-        // Detección simple de cabeceras de imagen
         if (view.getUint16(0, false) === 0xFFD8) {
             meta["Metadatos EXIF / Cabeceras"]["Formato"] = "JPEG / JFIF";
             let offset = 2;
             while (offset < view.byteLength) {
                 const marker = view.getUint16(offset, false);
-                if (marker === 0xFFE1) { // APP1 EXIF marker
+                if (marker === 0xFFE1) {
                     meta["Metadatos EXIF / Cabeceras"]["Marcador EXIF"] = "Presente (Cabecera APP1 detectada)";
                     break;
                 }
@@ -219,21 +261,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = '';
         try {
-            const qr = new QRCode(4, 0); // Type 4, Error Correction L
+            const qr = new QRCode(4, 0);
             qr.addData(text);
             qr.make();
             const dataUrl = qr.createDataURL(7, 4);
 
             const img = document.createElement('img');
             img.src = dataUrl;
-            img.style.borderRadius = '1rem';
-            img.style.border = '2px solid var(--border-glass)';
-            img.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+            img.className = 'rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl';
 
             const downloadBtn = document.createElement('a');
             downloadBtn.href = dataUrl;
             downloadBtn.download = 'codigo_qr_yeibtools.png';
-            downloadBtn.className = 'btn-action mt-4';
+            downloadBtn.className = 'px-6 py-3 bg-yeib-teal text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg inline-block mt-4';
             downloadBtn.innerText = '📥 Descargar QR Imagen';
 
             container.appendChild(img);
