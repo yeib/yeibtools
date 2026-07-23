@@ -40,6 +40,21 @@ $version = time();
             }
         }
 
+        // Theme Manager Engine
+        function applyTheme(theme) {
+            var html = document.documentElement;
+            var btn = document.getElementById('theme-toggle-btn');
+            if (theme === 'light') {
+                html.classList.remove('dark');
+                localStorage.setItem('yeib_tools_theme', 'light');
+                if (btn) btn.innerText = '☀️';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('yeib_tools_theme', 'dark');
+                if (btn) btn.innerText = '🌙';
+            }
+        }
+
         // Theme Initialization inline to prevent FOUC
         (function() {
             var savedTheme = localStorage.getItem('yeib_tools_theme') || 'dark';
@@ -50,22 +65,17 @@ $version = time();
             }
         })();
 
-        // Global Inline Functions for 100% Guaranteed Execution
+        document.addEventListener('DOMContentLoaded', function() {
+            var savedTheme = localStorage.getItem('yeib_tools_theme') || 'dark';
+            applyTheme(savedTheme);
+        });
+
         function toggleTheme() {
-            var html = document.documentElement;
-            var btn = document.getElementById('theme-toggle-btn');
-            var isDark = html.classList.contains('dark');
-            if (isDark) {
-                html.classList.remove('dark');
-                localStorage.setItem('yeib_tools_theme', 'light');
-                if (btn) btn.innerText = '🌙';
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('yeib_tools_theme', 'dark');
-                if (btn) btn.innerText = '☀️';
-            }
+            var isDark = document.documentElement.classList.contains('dark');
+            applyTheme(isDark ? 'light' : 'dark');
         }
 
+        // Tab Switcher Engine
         function switchTool(toolId) {
             if (!toolId) return;
 
@@ -83,9 +93,9 @@ $version = time();
                 targetPanel.style.display = 'block';
             }
 
-            // Update tab buttons styling
-            var activeClass = "tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer select-none";
-            var inactiveClass = "tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
+            // Tab button styles with vibrant active gradient in both modes
+            var activeClass = "tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none";
+            var inactiveClass = "tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
 
             var buttons = document.querySelectorAll('.tool-tab-btn');
             for (var j = 0; j < buttons.length; j++) {
@@ -107,10 +117,10 @@ $version = time();
     <!-- Favicon SVG Yeib -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22 fill=%22none%22><linearGradient id=%22yeibGrad%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 stop-color=%22%230d9488%22 /><stop offset=%22100%25%22 stop-color=%22%236366f1%22 /></linearGradient><path d=%22M4 24C9 24 11 12 16 12C21 12 23 6 28 6%22 stroke=%22url(%23yeibGrad)%22 stroke-width=%223.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><circle cx=%2216%22 cy=%2212%22 r=%223%22 fill=%22%230d9488%22 stroke=%22%23ffffff%22 stroke-width=%222%22/><circle cx=%2228%22 cy=%226%22 r=%223%22 fill=%22%236366f1%22 stroke=%22%23ffffff%22 stroke-width=%222%22/></svg>">
 </head>
-<body class="h-full font-sans antialiased text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-900 selection:bg-teal-500 selection:text-white flex flex-col min-h-screen transition-colors duration-300">
+<body class="h-full font-sans antialiased text-slate-800 dark:text-slate-200 bg-gradient-to-br from-slate-100 via-teal-50/20 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 selection:bg-teal-500 selection:text-white flex flex-col min-h-screen transition-colors duration-300">
 
     <!-- NAVBAR STICKY -->
-    <nav class="bg-white/95 dark:bg-slate-800/95 border-b border-slate-200 dark:border-teal-900/50 sticky top-0 z-[60] backdrop-blur-lg transition-colors duration-300">
+    <nav class="bg-white/90 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-teal-900/50 sticky top-0 z-[60] backdrop-blur-lg transition-colors duration-300 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo & Title -->
@@ -136,9 +146,9 @@ $version = time();
                 
                 <!-- Right Side Actions: Theme Toggle, Language Selector & Donate Dropdown -->
                 <div class="flex items-center gap-3">
-                    <!-- Botón de Modo Claro / Oscuro -->
-                    <button type="button" onclick="toggleTheme()" id="theme-toggle-btn" class="p-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-xs transition-all shadow-inner cursor-pointer" title="Cambiar Tema (Claro / Oscuro)">
-                        ☀️
+                    <!-- Botón de Modo Claro / Oscuro (🌙 cuando es Dark, ☀️ cuando es Light) -->
+                    <button type="button" onclick="toggleTheme()" id="theme-toggle-btn" class="p-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-xs transition-all shadow-inner cursor-pointer" title="Cambiar Tema">
+                        🌙
                     </button>
 
                     <!-- Selector de Idioma Dual (ES / EN) -->
@@ -153,7 +163,7 @@ $version = time();
 
                     <!-- Donate Dropdown (Alpine.js) -->
                     <div x-data="{ open: false }" class="relative">
-                        <button type="button" @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl hover:bg-teal-700 active:scale-95 transition-all shadow-lg cursor-pointer">
+                        <button type="button" @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white text-[10px] font-black uppercase rounded-xl active:scale-95 transition-all shadow-lg shadow-teal-600/20 cursor-pointer">
                             ❤️ <span class="hidden sm:inline" data-i18n="donate">Donar</span>
                         </button>
                         <div x-show="open" x-cloak @click.away="open = false" x-transition class="absolute top-full mt-3 right-0 w-52 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-2 z-[110]">
@@ -181,25 +191,25 @@ $version = time();
                 
                 <!-- TOOL TABS GRID (5 COLS DESKTOP, ORDERED, NO HORIZONTAL SCROLL) -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 relative z-20">
-                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer select-none">
+                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none">
                         <span>📺</span> <span class="truncate pointer-events-none" data-i18n="tab_youtube">Transcriptor</span>
                     </button>
-                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
                         <span>🕵️‍♂️</span> <span class="truncate pointer-events-none" data-i18n="tab_metadata">Metadatos</span>
                     </button>
-                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
                         <span>📱</span> <span class="truncate pointer-events-none" data-i18n="tab_qr">Código QR</span>
                     </button>
-                    <button type="button" id="btn-tab-whatsapp" onclick="switchTool('whatsapp')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                    <button type="button" id="btn-tab-whatsapp" onclick="switchTool('whatsapp')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
                         <span>💬</span> <span class="truncate pointer-events-none" data-i18n="tab_whatsapp">WhatsApp</span>
                     </button>
-                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
                         <span>📝</span> <span class="truncate pointer-events-none" data-i18n="tab_cleaner">Limpiador</span>
                     </button>
                 </div>
 
                 <!-- PANEL 1: TRANSCRIPTOR YOUTUBE -->
-                <div id="panel-youtube" class="tool-panel bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
+                <div id="panel-youtube" class="tool-panel bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📺</span> <span data-i18n="yt_title">Transcriptor de YouTube</span>
@@ -212,7 +222,7 @@ $version = time();
                         <input type="text" id="yt-input" data-i18n="yt_placeholder" placeholder="Ej: https://www.youtube.com/watch?v=jNQXAC9IVRw" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button type="button" onclick="fetchTranscript()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95 cursor-pointer" data-i18n="yt_btn">⚡ Obtener Transcripción</button>
+                    <button type="button" onclick="fetchTranscript()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="yt_btn">⚡ Obtener Transcripción</button>
 
                     <div id="yt-status" class="hidden"></div>
 
@@ -230,7 +240,7 @@ $version = time();
                 </div>
 
                 <!-- PANEL 2: METADATOS FORENSES -->
-                <div id="panel-metadata" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                <div id="panel-metadata" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🕵️‍♂️</span> <span data-i18n="meta_title">Lector de Metadatos Forenses (EXIF & PDF)</span>
@@ -256,7 +266,7 @@ $version = time();
                 </div>
 
                 <!-- PANEL 3: GENERADOR QR -->
-                <div id="panel-qr" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                <div id="panel-qr" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR</span>
@@ -269,13 +279,13 @@ $version = time();
                         <input type="text" id="qr-text-input" placeholder="Ej: https://tools.yeib.cl/" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código QR</button>
+                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código QR</button>
 
                     <div id="qr-output-container" class="flex flex-col items-center justify-center pt-4"></div>
                 </div>
 
                 <!-- PANEL 4: WHATSAPP LINK -->
-                <div id="panel-whatsapp" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                <div id="panel-whatsapp" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">💬</span> <span data-i18n="wa_title">Generador de Enlaces de WhatsApp</span>
@@ -295,7 +305,7 @@ $version = time();
                         </div>
                     </div>
 
-                    <button type="button" onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-yeib-teal hover:bg-teal-600 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg active:scale-95 cursor-pointer" data-i18n="wa_btn">🔗 Crear Enlace Directo</button>
+                    <button type="button" onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="wa_btn">🔗 Crear Enlace Directo</button>
 
                     <div id="wa-result" class="hidden space-y-3 pt-2">
                         <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="wa_result_label">Tu Enlace Generado:</label>
@@ -308,7 +318,7 @@ $version = time();
                 </div>
 
                 <!-- PANEL 5: LIMPIADOR DE TEXTO -->
-                <div id="panel-cleaner" class="tool-panel hidden bg-white dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                <div id="panel-cleaner" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📝</span> <span data-i18n="clean_title">Limpiador y Formateador de Texto</span>
@@ -343,7 +353,7 @@ $version = time();
             <aside class="space-y-6">
 
                 <!-- WIDGET 1: PUBLICIDAD EXTERNA / SPONSORS (ARRIBA) -->
-                <div class="bg-white dark:bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-200 dark:border-slate-700/60 shadow-xl space-y-3 transition-colors">
+                <div class="bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-200/80 dark:border-slate-700/60 shadow-xl space-y-3 transition-colors">
                     <h3 class="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-2">
                         <span>📢</span> <span data-i18n="ad_title">Publicidad / Sponsors</span>
                     </h3>
@@ -354,7 +364,7 @@ $version = time();
                 </div>
 
                 <!-- WIDGET 2: ECOSISTEMA YEIB (ABAJO) -->
-                <div class="bg-white dark:bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-200 dark:border-slate-700/60 shadow-xl space-y-4 transition-colors">
+                <div class="bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-200/80 dark:border-slate-700/60 shadow-xl space-y-4 transition-colors">
                     <h3 class="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-2">
                         <span>🌐</span> <span data-i18n="eco_title">Ecosistema Yeib</span>
                     </h3>
