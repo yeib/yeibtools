@@ -45,9 +45,28 @@
     <!-- Favicon SVG Yeib -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22 fill=%22none%22><linearGradient id=%22yeibGrad%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 stop-color=%22%230d9488%22 /><stop offset=%22100%25%22 stop-color=%22%236366f1%22 /></linearGradient><path d=%22M4 24C9 24 11 12 16 12C21 12 23 6 28 6%22 stroke=%22url(%23yeibGrad)%22 stroke-width=%223.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/><circle cx=%2216%22 cy=%2212%22 r=%223%22 fill=%22%230d9488%22 stroke=%22%23ffffff%22 stroke-width=%222%22/><circle cx=%2228%22 cy=%226%22 r=%223%22 fill=%22%236366f1%22 stroke=%22%23ffffff%22 stroke-width=%222%22/></svg>">
 </head>
-<body class="h-full font-sans antialiased text-slate-200 bg-slate-900 selection:bg-teal-500 selection:text-white">
+<body class="h-full font-sans antialiased text-slate-200 bg-slate-900 selection:bg-teal-500 selection:text-white flex flex-col min-h-screen">
 
-    <!-- NAVBAR STICKY (ESTILO FREEBLIOTECA / INDICADORES) -->
+    <!-- CINTA SUPERIOR DELGADA DE DONACIONES (POWERBAR SUPERIOR ESTILO FREEBLIOTECA) -->
+    <div class="bg-gradient-to-r from-teal-950 via-slate-900 to-indigo-950 border-b border-teal-900/40 py-2 px-4 z-[70]">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs gap-2">
+            <div class="flex items-center gap-2 text-slate-300 font-medium">
+                <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[9px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse">❤️ Apoyar Proyecto</span>
+                <span class="hidden sm:inline">¿Te sirvió alguna herramienta? Tu donación mantiene la infraestructura libre.</span>
+            </div>
+            <div class="flex items-center gap-3 font-bold text-[10px] uppercase">
+                <a href="https://link.mercadopago.cl/yeib" target="_blank" class="hover:text-teal-400 transition-colors flex items-center gap-1.5">
+                    <span class="bg-sky-500 text-white px-1.5 py-0.5 rounded text-[8px] font-black">MP</span> Mercado Pago
+                </a>
+                <span class="text-slate-600">•</span>
+                <a href="https://paypal.me/yeib22" target="_blank" class="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                    <span class="bg-indigo-600 text-white px-1.5 py-0.5 rounded text-[8px] font-black">PP</span> PayPal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR STICKY -->
     <nav class="bg-slate-800/95 border-b border-teal-900/50 sticky top-0 z-[60] backdrop-blur-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -101,7 +120,7 @@
     </nav>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             
             <!-- LEFT AREA: TOOLS GRID & ACTIVE PANEL (3 COLS) -->
@@ -270,31 +289,62 @@
             <!-- RIGHT SIDEBAR (1 COL) -->
             <aside class="space-y-6">
 
-                <!-- WIDGET 1: ECOSISTEMA YEIB -->
+                <!-- WIDGET 1: ECOSISTEMA YEIB (5 TARJETAS EXACTAS) -->
                 <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-4">
                     <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                         <span>🌐</span> Ecosistema Yeib
                     </h3>
                     <div class="space-y-3">
-                        <a href="https://indicadores.yeib.cl" target="_blank" class="block p-4 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
-                            <div class="text-xs font-black uppercase text-yeib-teal group-hover:text-teal-300">📈 Indicadores y Datos</div>
+                        <a href="https://indicadores.yeib.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
+                            <div class="text-xs font-black uppercase text-yeib-teal group-hover:text-teal-300 flex items-center justify-between">
+                                <span>📈 Indicadores y Datos</span>
+                                <span class="text-[9px] text-slate-500 font-normal">↗</span>
+                            </div>
                             <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Indicadores económicos en tiempo real y Kit del Emprendedor.</div>
                         </a>
 
-                        <a href="https://lotocgr.yeib.cl" target="_blank" class="block p-4 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
-                            <div class="text-xs font-black uppercase text-indigo-400 group-hover:text-indigo-300">🎯 LotoCgr Data</div>
-                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Minería forense de datos e inercia posicional para Loto y Kino.</div>
+                        <a href="https://freeblioteca.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
+                            <div class="text-xs font-black uppercase text-amber-400 group-hover:text-amber-300 flex items-center justify-between">
+                                <span>📚 Freeblioteca</span>
+                                <span class="text-[9px] text-slate-500 font-normal">↗</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Biblioteca digital y tours 3D interactivos con acceso libre.</div>
+                        </a>
+
+                        <a href="https://yeib.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
+                            <div class="text-xs font-black uppercase text-cyan-400 group-hover:text-cyan-300 flex items-center justify-between">
+                                <span>💻 Yeib Portfolio</span>
+                                <span class="text-[9px] text-slate-500 font-normal">↗</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Portal principal y proyectos del laboratorio de software Yeib.</div>
+                        </a>
+
+                        <a href="https://proteo.yeib.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
+                            <div class="text-xs font-black uppercase text-indigo-400 group-hover:text-indigo-300 flex items-center justify-between">
+                                <span>🤖 Proteo AI</span>
+                                <span class="text-[9px] text-slate-500 font-normal">↗</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Sistema de inteligencia artificial y asistente avanzado.</div>
+                        </a>
+
+                        <a href="https://cronicon.cl" target="_blank" class="block p-3.5 bg-slate-900/60 hover:bg-slate-700/60 rounded-2xl border border-slate-700/50 transition-all group">
+                            <div class="text-xs font-black uppercase text-rose-400 group-hover:text-rose-300 flex items-center justify-between">
+                                <span>📜 Cronicón</span>
+                                <span class="text-[9px] text-slate-500 font-normal">↗</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-relaxed">Diario histórico y crónicas del patrimonio nacional.</div>
                         </a>
                     </div>
                 </div>
 
-                <!-- WIDGET 2: PUBLICIDAD EXTERNA -->
+                <!-- WIDGET 2: PUBLICIDAD EXTERNA / SPONSORS -->
                 <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-3">
                     <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                         <span>📢</span> Publicidad / Sponsors
                     </h3>
-                    <div class="p-8 bg-slate-900/40 border border-dashed border-slate-700 rounded-2xl text-center text-slate-500 text-xs font-bold uppercase tracking-wider">
-                        Espacio disponible para Anuncios
+                    <div class="p-6 bg-slate-900/40 border border-dashed border-slate-700 rounded-2xl text-center text-slate-400 text-xs font-bold leading-relaxed">
+                        ¿Quieres anunciar tu marca aquí? <br/>
+                        <a href="mailto:yeib@pm.me" class="text-yeib-teal font-black hover:underline mt-1.5 inline-block">Envía un correo a yeib@pm.me</a>
                     </div>
                 </div>
 
@@ -315,9 +365,6 @@
 
     <!-- FOOTER -->
     <footer class="mt-auto border-t border-slate-800 bg-slate-950 py-8 px-4 text-center">
-        <div class="max-w-3xl mx-auto bg-emerald-500/5 border border-emerald-500/20 p-4 rounded-2xl mb-4 text-xs text-slate-400 leading-relaxed">
-            <strong class="text-emerald-400 font-bold">🔒 Declaración de Privacidad:</strong> No guardamos tus búsquedas, no guardamos tus archivos y no usamos cookies de seguimiento publicitario. Todo se procesa localmente en tu propio dispositivo.
-        </div>
         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">© <?php echo date('Y'); ?> <strong class="text-slate-300">Yeib Tools</strong> — Desarrollado con PHP Puro & Vanilla JS para máxima velocidad.</p>
     </footer>
 
