@@ -20,7 +20,7 @@
     <!-- Fonts Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luxurious+Script&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS & Alpine.js -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,7 +30,10 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    fontFamily: { 
+                        sans: ['Outfit', 'sans-serif'],
+                        signature: ['Luxurious Script', 'cursive']
+                    },
                     colors: { 'yeib-teal': '#0d9488' }
                 }
             }
@@ -47,7 +50,7 @@
 </head>
 <body class="h-full font-sans antialiased text-slate-200 bg-slate-900 selection:bg-teal-500 selection:text-white flex flex-col min-h-screen">
 
-    <!-- CINTA SUPERIOR DELGADA DE DONACIONES (POWERBAR SUPERIOR ESTILO FREEBLIOTECA) -->
+    <!-- CINTA SUPERIOR DELGADA DE DONACIONES (ESTILO FREEBLIOTECA) -->
     <div class="bg-gradient-to-r from-teal-950 via-slate-900 to-indigo-950 border-b border-teal-900/40 py-2 px-4 z-[70]">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs gap-2">
             <div class="flex items-center gap-2 text-slate-300 font-medium">
@@ -289,7 +292,18 @@
             <!-- RIGHT SIDEBAR (1 COL) -->
             <aside class="space-y-6">
 
-                <!-- WIDGET 1: ECOSISTEMA YEIB (5 TARJETAS EXACTAS) -->
+                <!-- WIDGET 1: PUBLICIDAD EXTERNA / SPONSORS (ARRIBA) -->
+                <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-3">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <span>📢</span> Publicidad / Sponsors
+                    </h3>
+                    <div class="p-6 bg-slate-900/40 border border-dashed border-slate-700 rounded-2xl text-center text-slate-400 text-xs font-bold leading-relaxed">
+                        ¿Quieres anunciar tu marca aquí? <br/>
+                        <a href="mailto:yeib@pm.me" class="text-yeib-teal font-black hover:underline mt-1.5 inline-block">Envía un correo a yeib@pm.me</a>
+                    </div>
+                </div>
+
+                <!-- WIDGET 2: ECOSISTEMA YEIB (ABAJO) -->
                 <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-4">
                     <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                         <span>🌐</span> Ecosistema Yeib
@@ -337,35 +351,44 @@
                     </div>
                 </div>
 
-                <!-- WIDGET 2: PUBLICIDAD EXTERNA / SPONSORS -->
-                <div class="bg-slate-800/90 backdrop-blur-lg p-6 rounded-[2rem] border border-slate-700/60 shadow-xl space-y-3">
-                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                        <span>📢</span> Publicidad / Sponsors
-                    </h3>
-                    <div class="p-6 bg-slate-900/40 border border-dashed border-slate-700 rounded-2xl text-center text-slate-400 text-xs font-bold leading-relaxed">
-                        ¿Quieres anunciar tu marca aquí? <br/>
-                        <a href="mailto:yeib@pm.me" class="text-yeib-teal font-black hover:underline mt-1.5 inline-block">Envía un correo a yeib@pm.me</a>
-                    </div>
-                </div>
-
-                <!-- WIDGET 3: PRIVACIDAD ABSOLUTA -->
-                <div class="bg-emerald-500/10 p-6 rounded-[2rem] border border-emerald-500/30 space-y-2">
-                    <h3 class="text-xs font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
-                        <span>🛡️</span> Privacidad Absoluta
-                    </h3>
-                    <p class="text-[11px] text-slate-300 leading-relaxed font-medium">
-                        En Yeib no almacenamos ni registramos tus archivos o datos. Todo se procesa localmente en tu propio dispositivo para tu total tranquilidad.
-                    </p>
-                </div>
-
             </aside>
 
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="mt-auto border-t border-slate-800 bg-slate-950 py-8 px-4 text-center">
-        <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">© <?php echo date('Y'); ?> <strong class="text-slate-300">Yeib Tools</strong> — Desarrollado con PHP Puro & Vanilla JS para máxima velocidad.</p>
+    <!-- FOOTER RENOVADO Y ELEGANTE -->
+    <footer class="mt-auto border-t border-slate-800 bg-slate-950/90 py-10 px-4">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <!-- PRIVACIDAD Y DISCLAIMER -->
+            <div class="bg-emerald-500/5 border border-emerald-500/20 p-5 rounded-2xl text-center max-w-4xl mx-auto">
+                <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                    <strong class="text-emerald-400 uppercase font-black tracking-wider mr-1">🛡️ Privacidad Absoluta:</strong> En Yeib no almacenamos ni registramos tus archivos, búsquedas o datos personales. Todo procesamiento de metadatos, códigos y herramientas ocurre 100% en el navegador de tu propio dispositivo para tu total tranquilidad.
+                </p>
+            </div>
+
+            <!-- COPYRIGHT & SIGNATURE -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t border-slate-800/80">
+                <div class="text-center md:text-left">
+                    <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">
+                        © <?php echo date('Y'); ?> Yeib. Todos los derechos reservados.
+                    </p>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5">
+                        Suite de Micro-Herramientas Gratuitas & Análisis Forense
+                    </p>
+                </div>
+
+                <!-- FIRMA BONITA DE YEIB EN LUXURIOUS SCRIPT -->
+                <div class="flex items-center gap-3">
+                    <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Hecho en Chile por</span>
+                    <a href="https://yeib.cl" target="_blank" class="no-underline group relative transition-all duration-300 hover:-translate-y-0.5">
+                        <span class="yeib-signature text-4xl font-normal transition-all duration-500 inline-block -rotate-2 group-hover:rotate-0 group-hover:scale-110" style="font-family: 'Luxurious Script', cursive; color: #f53003; text-shadow: 0 0 12px rgba(245, 48, 3, 0.4);">
+                            yeib
+                        </span>
+                        <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-[#f53003] transition-all duration-500 group-hover:w-full shadow-[0_0_10px_#f53003]"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <!-- LIBRERÍAS Y TAB SWITCHER SCRIPTS -->
