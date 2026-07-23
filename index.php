@@ -15,12 +15,23 @@ $version = time();
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://tools.yeib.cl/">
     
-    <!-- Open Graph / Facebook / Twitter -->
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tools.yeib.cl/">
-    <meta property="og:title" content="Yeib Tools | Micro-Herramientas Gratuitas sin Registro ni Rastreo">
-    <meta property="og:description" content="Transcripción de videos de YouTube, lectura y edición de metadatos PDF/EXIF en cliente, generador QR HD y herramientas de productividad sin subir archivos al servidor.">
+    <meta property="og:title" content="Yeib Tools | Micro-Herramientas Gratuitas & Privacidad Absoluta">
+    <meta property="og:description" content="Transcriptor de YouTube con prompt IA, Editor de Metadatos PDF/EXIF en cliente, Generador QR HD y utilidades de productividad sin subir archivos al servidor.">
     <meta property="og:site_name" content="Yeib Tools">
+    <meta property="og:image" content="https://tools.yeib.cl/assets/img/og-preview.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://tools.yeib.cl/">
+    <meta name="twitter:title" content="Yeib Tools | Micro-Herramientas Gratuitas sin Registro">
+    <meta name="twitter:description" content="Transcriptor de YouTube, Editor Forense PDF/EXIF en RAM, Generador QR HD y enlaces directos de WhatsApp. 100% privado.">
+    <meta name="twitter:image" content="https://tools.yeib.cl/assets/img/og-preview.jpg">
 
     <!-- Schema.org JSON-LD Structured Data para Google Search -->
     <script type="application/ld+json">
