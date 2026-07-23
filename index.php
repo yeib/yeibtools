@@ -329,7 +329,7 @@ $version = time();
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_color_label">Estilo de Color del QR</label>
                             <select id="qr-color-select" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none cursor-pointer">
-                                <option value="teal">✨ Gradiente Neón Yeib (Teal & Indigo)</option>
+                                <option value="teal">Gradiente Neón (Teal & Indigo)</option>
                                 <option value="solid">Sólido Clásico (Negro / Blanco)</option>
                                 <option value="indigo">Azul Índigo</option>
                                 <option value="rose">Rosa Neón</option>
