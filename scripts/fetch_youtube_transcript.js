@@ -64,46 +64,58 @@ function parseVtt(vttContent) {
 function run() {
     const tempDir = path.join(__dirname, 'temp_subs');
     if (!fs.existsSync(tempDir)) {
-        fs.mkdirSync(tempDir, { recursive: true });
+        try {
+            fs.mkdirSync(tempDir, { recursive: true });
+        } catch (e) {}
     }
 
     const outPattern = path.join(tempDir, `${videoId}`);
+    const ytDlpBin = fs.existsSync('/usr/local/bin/yt-dlp') ? '/usr/local/bin/yt-dlp' : 'yt-dlp';
 
     try {
-        // Ejecución con yt-dlp usando --sub-langs y proxy SOCKS5
-        const ytDlpCmd = `yt-dlp --proxy "socks5://127.0.0.1:40000" --write-auto-sub --write-sub --sub-langs "es.*,es,es-419,es-orig,en.*,en" --sub-format "vtt" --ignore-errors --skip-download -o "${outPattern}" "https://www.youtube.com/watch?v=${videoId}"`;
+        // Ejecución con la ruta absoluta de yt-dlp y PATH garantizado
+        const ytDlpCmd = `${ytDlpBin} --proxy "socks5://127.0.0.1:40000" --write-auto-sub --write-sub --sub-langs "es.*,es-419,es-orig,es,en.*,en" --sub-format "vtt" --ignore-errors --skip-download -o "${outPattern}" "https://www.youtube.com/watch?v=${videoId}"`;
         
         try {
-            execSync(ytDlpCmd, { stdio: 'pipe', timeout: 25000 });
+            execSync(ytDlpCmd, {
+                stdio: 'pipe',
+                timeout: 25000,
+                env: {
+                    ...process.env,
+                    PATH: '/usr/local/bin:/usr/bin:/bin:' + (process.env.PATH || '')
+                }
+            });
         } catch (e) {
             // Continuar para revisar si algún VTT se descargó
         }
 
-        const files = fs.readdirSync(tempDir).filter(f => f.startsWith(videoId) && f.endsWith('.vtt'));
+        if (fs.existsSync(tempDir)) {
+            const files = fs.readdirSync(tempDir).filter(f => f.startsWith(videoId) && f.endsWith('.vtt'));
 
-        if (files.length > 0) {
-            let subFile = files.find(f => f.includes('.es') || f.includes('.es-') || f.includes('.es-orig.')) || files[0];
-            const fullPath = path.join(tempDir, subFile);
-            const vttContent = fs.readFileSync(fullPath, 'utf8');
+            if (files.length > 0) {
+                let subFile = files.find(f => f.includes('.es') || f.includes('.es-') || f.includes('.es-orig.')) || files[0];
+                const fullPath = path.join(tempDir, subFile);
+                const vttContent = fs.readFileSync(fullPath, 'utf8');
 
-            // Limpieza inmediata de archivos temporales VTT
-            files.forEach(f => {
-                try { fs.unlinkSync(path.join(tempDir, f)); } catch (e) {}
-            });
+                // Limpieza inmediata de archivos temporales VTT
+                files.forEach(f => {
+                    try { fs.unlinkSync(path.join(tempDir, f)); } catch (e) {}
+                });
 
-            const parsedLines = parseVtt(vttContent);
-            if (parsedLines.length > 0) {
-                const rawText = parsedLines.map(l => `[${l.timestamp}] ${l.text}`).join('\n');
-                const plainText = parsedLines.map(l => l.text).join(' ');
-                console.log(JSON.stringify({
-                    success: true,
-                    video_id: videoId,
-                    total_lines: parsedLines.length,
-                    lines: parsedLines,
-                    raw_text: rawText,
-                    plain_text: plainText
-                }));
-                return;
+                const parsedLines = parseVtt(vttContent);
+                if (parsedLines.length > 0) {
+                    const rawText = parsedLines.map(l => `[${l.timestamp}] ${l.text}`).join('\n');
+                    const plainText = parsedLines.map(l => l.text).join(' ');
+                    console.log(JSON.stringify({
+                        success: true,
+                        video_id: videoId,
+                        total_lines: parsedLines.length,
+                        lines: parsedLines,
+                        raw_text: rawText,
+                        plain_text: plainText
+                    }));
+                    return;
+                }
             }
         }
     } catch (e) {
