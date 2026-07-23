@@ -28,15 +28,18 @@ const translations = {
 
         // Metadatos Forenses & Editor
         meta_title: "Lector y Editor Forense de Metadatos (EXIF & PDF)",
-        meta_subtitle: "Inspecciona, modifica o borra datos ocultos (Autor, GPS, Software) 100% en tu navegador.",
+        meta_subtitle: "Inspecciona, modifica o borra datos ocultos (Autor, Fechas, GPS, Software) 100% en tu navegador.",
         meta_drop_title: "Arrastra tu archivo aquí o haz clic para examinar",
         meta_drop_subtitle: "Soporta imágenes (JPG, PNG, WEBP) y documentos PDF.",
         meta_security: "🔒 <strong>Seguridad Extrema:</strong> El archivo se procesa localmente en la memoria RAM de tu dispositivo. Cero bytes subidos a la VPS.",
 
-        meta_editor_title: "🛠️ Editor & Sanitizador de Metadatos",
+        meta_editor_title: "🛠️ Editor & Sanitizador de Metadatos Avanzado",
         meta_author_label: "Nombre de Autor",
         meta_title_label: "Título del Documento",
+        meta_subject_label: "Asunto / Tema",
         meta_creator_label: "Software / Creador",
+        meta_producer_label: "Productor PDF",
+        meta_date_label: "Fecha de Creación",
         meta_btn_sanitize: "🧹 Borrar Todos los Metadatos Ocultos",
         meta_btn_save: "💾 Guardar & Descargar PDF Sanitizado",
 
@@ -117,15 +120,18 @@ const translations = {
 
         // Metadatos Forenses & Editor
         meta_title: "Forensic Metadata Reader & Editor (EXIF & PDF)",
-        meta_subtitle: "Inspect, modify or wipe hidden data (Author, GPS, Software) 100% inside your browser.",
+        meta_subtitle: "Inspect, modify or wipe hidden data (Author, Dates, GPS, Software) 100% inside your browser.",
         meta_drop_title: "Drag your file here or click to browse",
         meta_drop_subtitle: "Supports images (JPG, PNG, WEBP) and PDF documents.",
         meta_security: "🔒 <strong>Extreme Security:</strong> File is processed locally inside your device RAM. Zero bytes uploaded to VPS.",
 
-        meta_editor_title: "🛠️ Metadata Editor & Sanitizer",
+        meta_editor_title: "🛠️ Advanced Metadata Editor & Sanitizer",
         meta_author_label: "Author Name",
         meta_title_label: "Document Title",
+        meta_subject_label: "Subject",
         meta_creator_label: "Software / Creator",
+        meta_producer_label: "PDF Producer",
+        meta_date_label: "Creation Date",
         meta_btn_sanitize: "🧹 Wipe All Hidden Metadata",
         meta_btn_save: "💾 Save & Download Sanitized PDF",
 

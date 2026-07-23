@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- 2. LECTOR Y EDITOR DE METADATOS FORENSES (100% LOCAL CLIENT-SIDE) ---
+    // --- 2. LECTOR Y EDITOR AVANZADO DE METADATOS FORENSES (100% CLIENT-SIDE) ---
     let currentLoadedFile = null;
     let currentLoadedArrayBuffer = null;
 
@@ -195,17 +195,20 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function(e) {
                 currentLoadedArrayBuffer = e.target.result;
 
-                // Intentar leer como texto parcial para extracción rápida
+                // Lectura rápida de cabeceras
                 const textReader = new FileReader();
                 textReader.onload = function(evt) {
                     const metadata = extractPdfMetadata(evt.target.result, file);
                     output.innerText = formatMetadataJson(metadata);
 
-                    // Precargar valores detectados en el editor
+                    // Precargar los 6 campos detectados en la interfaz del editor
                     if (metadata["Metadatos Internos PDF"]) {
-                        document.getElementById('meta-input-author').value = metadata["Metadatos Internos PDF"]["Autor"] || '';
-                        document.getElementById('meta-input-title').value = metadata["Metadatos Internos PDF"]["Título"] || '';
-                        document.getElementById('meta-input-creator').value = metadata["Metadatos Internos PDF"]["Creador / Software"] || '';
+                        const pdfMeta = metadata["Metadatos Internos PDF"];
+                        document.getElementById('meta-input-author').value = pdfMeta["Autor"] || '';
+                        document.getElementById('meta-input-title').value = pdfMeta["Título"] || '';
+                        document.getElementById('meta-input-subject').value = pdfMeta["Asunto"] || '';
+                        document.getElementById('meta-input-creator').value = pdfMeta["Creador / Software"] || '';
+                        document.getElementById('meta-input-producer').value = pdfMeta["Productor PDF"] || '';
                     }
 
                     if (editorBox) {
@@ -247,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const { PDFDocument } = window.PDFLib;
             const pdfDoc = await PDFDocument.load(currentLoadedArrayBuffer);
 
-            // Borrar metadatos
+            // Limpieza y blanqueado completo de datos sensibles y fechas
             pdfDoc.setTitle('');
             pdfDoc.setAuthor('');
             pdfDoc.setSubject('');
@@ -260,9 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const pdfBytes = await pdfDoc.save();
             downloadBlob(pdfBytes, 'documento_sanitizado_yeib.pdf', 'application/pdf');
 
-            alert('🧹 ¡Metadatos eliminados con éxito! Se ha descargado tu PDF 100% sanitizado sin dejar rastro.');
+            alert('🧹 ¡Metadatos y fechas eliminadas con éxito! Se ha descargado tu PDF 100% sanitizado.');
         } catch (e) {
-            alert('Error al sanitizar metadatos del PDF. Asegúrate de que no esté protegido por contraseña.');
+            alert('Error al sanitizar metadatos del PDF.');
         }
     };
 
@@ -274,7 +277,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const author = document.getElementById('meta-input-author').value.trim();
         const title = document.getElementById('meta-input-title').value.trim();
+        const subject = document.getElementById('meta-input-subject').value.trim();
         const creator = document.getElementById('meta-input-creator').value.trim();
+        const producer = document.getElementById('meta-input-producer').value.trim();
+        const customDate = document.getElementById('meta-input-date').value;
 
         try {
             const { PDFDocument } = window.PDFLib;
@@ -282,14 +288,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             pdfDoc.setAuthor(author);
             pdfDoc.setTitle(title);
+            pdfDoc.setSubject(subject);
             pdfDoc.setCreator(creator);
-            pdfDoc.setProducer('Yeib Tools Client Engine');
-            pdfDoc.setModificationDate(new Date());
+            if (producer) pdfDoc.setProducer(producer);
+
+            // Edición de Fecha de Creación y Modificación
+            if (customDate) {
+                const dateObj = new Date(customDate);
+                pdfDoc.setCreationDate(dateObj);
+                pdfDoc.setModificationDate(dateObj);
+            } else {
+                pdfDoc.setModificationDate(new Date());
+            }
 
             const pdfBytes = await pdfDoc.save();
             downloadBlob(pdfBytes, 'pdf_editado_yeib.pdf', 'application/pdf');
 
-            alert('💾 ¡Metadatos actualizados con éxito! Se ha descargado tu nuevo PDF.');
+            alert('💾 ¡Metadatos y fechas actualizados con éxito! Se ha descargado tu nuevo PDF.');
         } catch (e) {
             alert('Error al guardar metadatos en el PDF.');
         }
@@ -314,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = text.match(/\/Title\s*\((.*?)\)/);
         const author = text.match(/\/Author\s*\((.*?)\)/);
+        const subject = text.match(/\/Subject\s*\((.*?)\)/);
         const creator = text.match(/\/Creator\s*\((.*?)\)/);
         const producer = text.match(/\/Producer\s*\((.*?)\)/);
         const creationDate = text.match(/\/CreationDate\s*\((.*?)\)/);
@@ -323,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (version) meta["Metadatos Internos PDF"]["Versión PDF"] = version[0];
         if (title) meta["Metadatos Internos PDF"]["Título"] = title[1];
         if (author) meta["Metadatos Internos PDF"]["Autor"] = author[1];
+        if (subject) meta["Metadatos Internos PDF"]["Asunto"] = subject[1];
         if (creator) meta["Metadatos Internos PDF"]["Creador / Software"] = creator[1];
         if (producer) meta["Metadatos Internos PDF"]["Productor PDF"] = producer[1];
         if (creationDate) meta["Metadatos Internos PDF"]["Fecha Creación PDF"] = creationDate[1];
