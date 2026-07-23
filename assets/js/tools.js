@@ -10,10 +10,10 @@ function initTheme() {
     
     if (savedTheme === 'light') {
         document.documentElement.classList.remove('dark');
-        if (btn) btn.innerText = '🌙';
+        if (btn) btn.innerText = '☀️';
     } else {
         document.documentElement.classList.add('dark');
-        if (btn) btn.innerText = '☀️';
+        if (btn) btn.innerText = '🌙';
     }
 }
 
@@ -24,35 +24,32 @@ window.toggleTheme = function() {
     if (isDark) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('yeib_tools_theme', 'light');
-        if (btn) btn.innerText = '🌙';
+        if (btn) btn.innerText = '☀️';
     } else {
         document.documentElement.classList.add('dark');
         localStorage.setItem('yeib_tools_theme', 'dark');
-        if (btn) btn.innerText = '☀️';
+        if (btn) btn.innerText = '🌙';
     }
 };
 
-// Switch Tabs Engine (100% Error-Free className replacement + display toggle)
+// Switch Tabs Engine
 window.switchTool = function(toolId) {
     if (!toolId) return;
 
-    // 1. Hide all panels
     const panels = document.querySelectorAll('.tool-panel');
     panels.forEach(p => {
         p.classList.add('hidden');
         p.style.display = 'none';
     });
 
-    // 2. Show target panel
     const targetPanel = document.getElementById('panel-' + toolId);
     if (targetPanel) {
         targetPanel.classList.remove('hidden');
         targetPanel.style.display = 'block';
     }
 
-    // 3. Update tab buttons styling
-    const activeClass = "tool-tab-btn px-4 py-3 bg-yeib-teal text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer select-none";
-    const inactiveClass = "tool-tab-btn px-4 py-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-600 dark:text-slate-400 hover:text-yeib-teal transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
+    const activeClass = "tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none";
+    const inactiveClass = "tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
 
     const buttons = document.querySelectorAll('.tool-tab-btn');
     buttons.forEach(b => {
@@ -68,7 +65,6 @@ window.switchTool = function(toolId) {
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
-    // Attach explicit click listeners to tab buttons
     document.querySelectorAll('.tool-tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -276,38 +272,132 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 3. GENERADOR DE CÓDIGO QR ---
+    // --- 3. GENERADOR DE CÓDIGO QR HD PERSONALIZADO CON LOGO YEIB ---
     window.generateQrCode = function() {
-        const text = document.getElementById('qr-text-input').value.trim();
+        const textInput = document.getElementById('qr-text-input');
+        const text = textInput ? textInput.value.trim() : '';
         const container = document.getElementById('qr-output-container');
 
         if (!text) {
-            alert('Ingresa el texto o URL para generar el QR.');
+            alert('Por favor ingresa un texto o URL para generar tu código QR.');
             return;
         }
 
-        container.innerHTML = '';
-        try {
-            const qr = new QRCode(4, 0);
-            qr.addData(text);
-            qr.make();
-            const dataUrl = qr.createDataURL(7, 4);
+        const colorStyle = document.getElementById('qr-color-select') ? document.getElementById('qr-color-select').value : 'teal';
+        const bgStyle = document.getElementById('qr-bg-select') ? document.getElementById('qr-bg-select').value : 'light';
+        const includeYeibLogo = document.getElementById('qr-logo-check') ? document.getElementById('qr-logo-check').checked : true;
 
-            const img = document.createElement('img');
-            img.src = dataUrl;
-            img.className = 'rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl';
+        container.innerHTML = '<div class="p-4 text-xs font-bold text-teal-500 animate-pulse">⚡ Renderizando QR HD con marca Yeib...</div>';
+
+        // 1. Generar matriz de datos QR con Error Correction High (Level 3 - H 30%)
+        const qrModel = new QRCode(-1, 3); // Error Correction H = 3
+        qrModel.addData(text);
+        qrModel.make();
+
+        const count = qrModel.getModuleCount();
+        const canvasSize = 800; // Alta Definición HD
+        const margin = 40;
+        const cellSize = (canvasSize - margin * 2) / count;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
+        canvas.className = "w-64 h-64 sm:w-72 sm:h-72 rounded-3xl border-2 border-slate-200 dark:border-slate-700 shadow-2xl transition-all hover:scale-105";
+        const ctx = canvas.getContext('2d');
+
+        // 2. Pintar Fondo
+        if (bgStyle === 'light') {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvasSize, canvasSize);
+        } else if (bgStyle === 'dark') {
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvasSize, canvasSize);
+        } else {
+            ctx.clearRect(0, 0, canvasSize, canvasSize); // Transparente
+        }
+
+        // 3. Crear Gradiente / Color de Módulos (Dots)
+        let moduleFill;
+        if (colorStyle === 'teal') {
+            const grad = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
+            grad.addColorStop(0, '#0d9488'); // Yeib Teal
+            grad.addColorStop(1, '#6366f1'); // Yeib Indigo
+            moduleFill = grad;
+        } else if (colorStyle === 'indigo') {
+            moduleFill = '#4f46e5';
+        } else if (colorStyle === 'rose') {
+            moduleFill = '#e11d48';
+        } else if (colorStyle === 'emerald') {
+            moduleFill = '#059669';
+        } else {
+            moduleFill = bgStyle === 'dark' ? '#f8fafc' : '#090d16'; // Negro / Blanco sólido
+        }
+
+        // 4. Dibujar Módulos del QR con bordes redondeados
+        ctx.fillStyle = moduleFill;
+        for (let row = 0; row < count; row++) {
+            for (let col = 0; col < count; col++) {
+                if (qrModel.isDark(row, col)) {
+                    const x = margin + col * cellSize;
+                    const y = margin + row * cellSize;
+                    
+                    ctx.beginPath();
+                    ctx.roundRect(x, y, cellSize + 0.5, cellSize + 0.5, cellSize * 0.25);
+                    ctx.fill();
+                }
+            }
+        }
+
+        // 5. Incrustar Logo Oficial Yeib en el centro (si está activado)
+        if (includeYeibLogo) {
+            const center = canvasSize / 2;
+            const logoRadius = canvasSize * 0.13; // 13% del QR
+
+            // 5a. Fondo circular blanco u oscuro de protección para la marca
+            ctx.beginPath();
+            ctx.arc(center, center, logoRadius + 12, 0, Math.PI * 2);
+            ctx.fillStyle = bgStyle === 'dark' ? '#0f172a' : '#ffffff';
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#0d9488';
+            ctx.stroke();
+
+            // 5b. Dibujar Isotipo Oficial de Yeib (Ondas Teal e Indigo con Esferas)
+            const iconSize = logoRadius * 1.35;
+            const iconX = center - iconSize / 2;
+            const iconY = center - iconSize / 2;
+
+            // Renderizar SVG del Logo Yeib en canvas
+            const svgData = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d9488"/><stop offset="100%" stop-color="#6366f1"/></linearGradient><path d="M4 24C9 24 11 12 16 12C21 12 23 6 28 6" stroke="url(#g)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="12" r="3" fill="#0d9488" stroke="#ffffff" stroke-width="2"/><circle cx="28" cy="6" r="3" fill="#6366f1" stroke="#ffffff" stroke-width="2"/><path d="M4 24H28" stroke="#0d9488" stroke-width="2" stroke-linecap="round"/></svg>`;
+
+            const img = new Image();
+            img.onload = function() {
+                ctx.drawImage(img, iconX, iconY, iconSize, iconSize);
+                finishQrRender(canvas);
+            };
+            img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+        } else {
+            finishQrRender(canvas);
+        }
+
+        function finishQrRender(canvasEl) {
+            container.innerHTML = '';
+            
+            const dataUrl = canvasEl.toDataURL('image/png');
+
+            const previewImg = document.createElement('img');
+            previewImg.src = dataUrl;
+            previewImg.className = "w-64 h-64 sm:w-72 sm:h-72 rounded-3xl border-2 border-teal-500/30 shadow-2xl transition-all hover:scale-105";
 
             const downloadBtn = document.createElement('a');
             downloadBtn.href = dataUrl;
-            downloadBtn.download = 'codigo_qr_yeibtools.png';
-            downloadBtn.className = 'px-6 py-3 bg-yeib-teal text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg inline-block mt-4';
-            downloadBtn.innerText = '📥 Descargar QR Imagen';
+            downloadBtn.download = 'qr_yeibtools_hd.png';
+            downloadBtn.className = "px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 inline-flex items-center gap-2 mt-4 cursor-pointer";
+            downloadBtn.innerHTML = '📥 Descargar QR HD (PNG)';
 
-            container.appendChild(img);
+            container.appendChild(previewImg);
             container.appendChild(document.createElement('br'));
             container.appendChild(downloadBtn);
-        } catch (e) {
-            container.innerText = 'Error al generar código QR. Texto demasiado largo.';
         }
     };
 

@@ -146,7 +146,7 @@ $version = time();
                 
                 <!-- Right Side Actions: Theme Toggle, Language Selector & Donate Dropdown -->
                 <div class="flex items-center gap-3">
-                    <!-- Botón de Modo Claro / Oscuro (🌙 cuando es Dark, ☀️ cuando es Light) -->
+                    <!-- Botón de Modo Claro / Oscuro -->
                     <button type="button" onclick="toggleTheme()" id="theme-toggle-btn" class="p-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-xs transition-all shadow-inner cursor-pointer" title="Cambiar Tema">
                         🌙
                     </button>
@@ -265,22 +265,56 @@ $version = time();
                     </div>
                 </div>
 
-                <!-- PANEL 3: GENERADOR QR -->
+                <!-- PANEL 3: GENERADOR QR PERSONALIZADO CON LOGO YEIB -->
                 <div id="panel-qr" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR</span>
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR Personalizado</span>
                         </h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Genera códigos QR de alta resolución instantáneamente en tu navegador.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Genera códigos QR de alta resolución con diseño de color y logo central de Yeib.</p>
                     </div>
 
+                    <!-- Input de Texto / URL -->
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="qr_label">Texto o URL a Codificar</label>
                         <input type="text" id="qr-text-input" placeholder="Ej: https://tools.yeib.cl/" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                     </div>
 
-                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código QR</button>
+                    <!-- Opciones Visuales de Color y Fondo -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_color_label">Estilo de Color del QR</label>
+                            <select id="qr-color-select" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none cursor-pointer">
+                                <option value="teal">✨ Gradiente Neón Yeib (Teal & Indigo)</option>
+                                <option value="solid">Sólido Clásico (Negro / Blanco)</option>
+                                <option value="indigo">Azul Índigo</option>
+                                <option value="rose">Rosa Neón</option>
+                                <option value="emerald">Verde Esmeralda</option>
+                            </select>
+                        </div>
 
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_bg_label">Fondo</label>
+                            <select id="qr-bg-select" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none cursor-pointer">
+                                <option value="light">Blanco Puro</option>
+                                <option value="dark">Oscuro Elegante</option>
+                                <option value="transparent">Transparente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox de Marca Yeib en el centro -->
+                    <div class="flex items-center gap-3 bg-teal-500/10 border border-teal-500/30 p-4 rounded-2xl">
+                        <input type="checkbox" id="qr-logo-check" checked class="w-4 h-4 text-yeib-teal rounded border-slate-300 focus:ring-yeib-teal cursor-pointer">
+                        <label for="qr-logo-check" class="text-xs font-bold text-teal-600 dark:text-teal-400 cursor-pointer select-none" data-i18n="qr_logo_option">
+                            Incrustar Logo Oficial Yeib en el centro 🚀
+                        </label>
+                    </div>
+
+                    <!-- Botón Generar -->
+                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código QR Personalizado</button>
+
+                    <!-- Resultado Canvas / Descarga -->
                     <div id="qr-output-container" class="flex flex-col items-center justify-center pt-4"></div>
                 </div>
 

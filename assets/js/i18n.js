@@ -34,10 +34,14 @@ const translations = {
         meta_security: "🔒 <strong>Seguridad Extrema:</strong> El archivo se lee localmente desde la memoria de tu dispositivo. Ningún byte sale hacia el servidor.",
 
         // Código QR
-        qr_title: "Generador de Código QR",
-        qr_subtitle: "Genera códigos QR de alta resolución instantáneamente en tu navegador.",
+        qr_title: "Generador de Código QR Personalizado",
+        qr_subtitle: "Genera códigos QR de alta resolución con diseño de color y logo central de Yeib.",
         qr_label: "Texto o URL a Codificar",
-        qr_btn: "🎨 Generar Código QR",
+        qr_color_label: "Estilo de Color del QR",
+        qr_bg_label: "Fondo",
+        qr_logo_option: "Incrustar Logo Oficial Yeib en el centro 🚀",
+        qr_btn: "🎨 Generar Código QR Personalizado",
+        qr_download: "📥 Descargar QR (Alta Resolución HD)",
 
         // WhatsApp
         wa_title: "Generador de Enlaces de WhatsApp",
@@ -112,10 +116,14 @@ const translations = {
         meta_security: "🔒 <strong>Extreme Security:</strong> File is read locally from your device memory. Zero bytes leave for the server.",
 
         // Código QR
-        qr_title: "QR Code Generator",
-        qr_subtitle: "Generate high resolution QR codes instantly in your browser.",
+        qr_title: "Custom QR Code Generator",
+        qr_subtitle: "Generate high-res QR codes with custom colors and center Yeib logo.",
         qr_label: "Text or URL to Encode",
-        qr_btn: "🎨 Generate QR Code",
+        qr_color_label: "QR Color Style",
+        qr_bg_label: "Background",
+        qr_logo_option: "Embed Official Yeib Logo in center 🚀",
+        qr_btn: "🎨 Generate Custom QR Code",
+        qr_download: "📥 Download HD QR Code",
 
         // WhatsApp
         wa_title: "WhatsApp Link Generator",
@@ -170,10 +178,8 @@ function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('yeib_tools_lang', lang);
 
-    // Update HTML lang attribute
     document.documentElement.lang = lang;
 
-    // Translate all elements with data-i18n attribute
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -187,17 +193,16 @@ function setLanguage(lang) {
         }
     });
 
-    // Update Language Toggle Button Badges
     const badgeEs = document.getElementById('lang-btn-es');
     const badgeEn = document.getElementById('lang-btn-en');
     
     if (badgeEs && badgeEn) {
         if (lang === 'es') {
-            badgeEs.className = 'px-2 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm';
-            badgeEn.className = 'px-2 py-1 text-slate-400 hover:text-white rounded-lg text-[10px] font-black uppercase transition-all';
+            badgeEs.className = 'px-2.5 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm cursor-pointer';
+            badgeEn.className = 'px-2.5 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer';
         } else {
-            badgeEn.className = 'px-2 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm';
-            badgeEs.className = 'px-2 py-1 text-slate-400 hover:text-white rounded-lg text-[10px] font-black uppercase transition-all';
+            badgeEn.className = 'px-2.5 py-1 bg-yeib-teal text-white rounded-lg text-[10px] font-black uppercase transition-all shadow-sm cursor-pointer';
+            badgeEs.className = 'px-2.5 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer';
         }
     }
 }
