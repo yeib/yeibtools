@@ -42,11 +42,11 @@ const translations = {
 
         // Código QR
         qr_title: "Generador de Código QR Personalizado",
-        qr_subtitle: "Genera códigos QR de alta resolución con diseño de color y logo central de Yeib.",
+        qr_subtitle: "Genera códigos QR de alta resolución con diseño de color e insignia discreta.",
         qr_label: "Texto o URL a Codificar",
         qr_color_label: "Estilo de Color del QR",
         qr_bg_label: "Fondo",
-        qr_logo_option: "Incrustar Logo Oficial Yeib en el centro 🚀",
+        qr_logo_option: "Incluir insignia de verificación de diseño 🚀",
         qr_btn: "🎨 Generar Código QR Personalizado",
         qr_download: "📥 Descargar QR (Alta Resolución HD)",
 
@@ -131,11 +131,11 @@ const translations = {
 
         // Código QR
         qr_title: "Custom QR Code Generator",
-        qr_subtitle: "Generate high-res QR codes with custom colors and center Yeib logo.",
+        qr_subtitle: "Generate high-res QR codes with custom colors and discrete verification badge.",
         qr_label: "Text or URL to Encode",
         qr_color_label: "QR Color Style",
         qr_bg_label: "Background",
-        qr_logo_option: "Embed Official Yeib Logo in center 🚀",
+        qr_logo_option: "Include verification design badge 🚀",
         qr_btn: "🎨 Generate Custom QR Code",
         qr_download: "📥 Download HD QR Code",
 

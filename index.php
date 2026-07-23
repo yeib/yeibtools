@@ -297,13 +297,13 @@ $version = time();
                     </div>
                 </div>
 
-                <!-- PANEL 3: GENERADOR QR PERSONALIZADO CON LOGO YEIB -->
+                <!-- PANEL 3: GENERADOR QR PERSONALIZADO CON LOGO YEIB DISCRETO -->
                 <div id="panel-qr" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                             <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR Personalizado</span>
                         </h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Genera códigos QR de alta resolución con diseño de color y logo central de Yeib.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Genera códigos QR de alta resolución con diseño de color e insignia discreta.</p>
                     </div>
 
                     <!-- Input de Texto / URL -->
@@ -335,11 +335,11 @@ $version = time();
                         </div>
                     </div>
 
-                    <!-- Checkbox de Marca Yeib en el centro -->
+                    <!-- Checkbox de Insignia de Diseño Discreta -->
                     <div class="flex items-center gap-3 bg-teal-500/10 border border-teal-500/30 p-4 rounded-2xl">
                         <input type="checkbox" id="qr-logo-check" checked class="w-4 h-4 text-yeib-teal rounded border-slate-300 focus:ring-yeib-teal cursor-pointer">
                         <label for="qr-logo-check" class="text-xs font-bold text-teal-600 dark:text-teal-400 cursor-pointer select-none" data-i18n="qr_logo_option">
-                            Incrustar Logo Oficial Yeib en el centro 🚀
+                            Incluir insignia de verificación de diseño 🚀
                         </label>
                     </div>
 
