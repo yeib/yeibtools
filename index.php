@@ -15,6 +15,11 @@ $version = time();
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://tools.yeib.cl/">
     
+    <!-- Mobile System Bars Theme Color (Brave/Chrome/Safari) -->
+    <meta name="theme-color" id="theme-color-meta" content="#090d16">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="color-scheme" content="dark light">
+
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tools.yeib.cl/">
@@ -93,14 +98,18 @@ $version = time();
         function applyTheme(theme) {
             var html = document.documentElement;
             var btn = document.getElementById('theme-toggle-btn');
+            var metaTheme = document.getElementById('theme-color-meta');
+
             if (theme === 'light') {
                 html.classList.remove('dark');
                 localStorage.setItem('yeib_tools_theme', 'light');
                 if (btn) btn.innerText = '☀️';
+                if (metaTheme) metaTheme.setAttribute('content', '#f8fafc');
             } else {
                 html.classList.add('dark');
                 localStorage.setItem('yeib_tools_theme', 'dark');
                 if (btn) btn.innerText = '🌙';
+                if (metaTheme) metaTheme.setAttribute('content', '#090d16');
             }
         }
 
@@ -143,8 +152,8 @@ $version = time();
             }
 
             // Tab button styles with vibrant active gradient in both modes
-            var activeClass = "tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none";
-            var inactiveClass = "tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none";
+            var activeClass = "tool-tab-btn px-3.5 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none whitespace-nowrap shrink-0";
+            var inactiveClass = "tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0";
 
             var buttons = document.querySelectorAll('.tool-tab-btn');
             for (var j = 0; j < buttons.length; j++) {
@@ -239,28 +248,28 @@ $version = time();
             <!-- LEFT AREA: TOOLS GRID & ACTIVE PANEL (3 COLS) -->
             <div class="lg:col-span-3 space-y-6">
                 
-                <!-- TOOL TABS GRID (SCROLLABLE EN MÓVIL, GRID EN DESKTOP) -->
-                <div class="flex overflow-x-auto no-scrollbar gap-2 relative z-20 pb-2 sm:pb-0 sm:grid sm:grid-cols-4 lg:grid-cols-7">
-                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>📺</span> <span class="truncate pointer-events-none" data-i18n="tab_youtube">Transcriptor</span>
+                <!-- TOOL TABS GRID (SCROLLABLE EN MÓVIL/TABLET, GRID EN DESKTOP GRANDE) -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 relative z-20 pb-2 xl:grid xl:grid-cols-7">
+                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-3.5 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>📺</span> <span class="pointer-events-none" data-i18n="tab_youtube">Transcriptor</span>
                     </button>
-                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>🕵️‍♂️</span> <span class="truncate pointer-events-none" data-i18n="tab_metadata">Metadatos</span>
+                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🕵️‍♂️</span> <span class="pointer-events-none" data-i18n="tab_metadata">Metadatos</span>
                     </button>
-                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>📱</span> <span class="truncate pointer-events-none" data-i18n="tab_qr">QR & Barras</span>
+                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>📱</span> <span class="pointer-events-none" data-i18n="tab_qr">QR & Barras</span>
                     </button>
-                    <button type="button" id="btn-tab-links" onclick="switchTool('links')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>🔗</span> <span class="truncate pointer-events-none" data-i18n="tab_links">Enlaces</span>
+                    <button type="button" id="btn-tab-links" onclick="switchTool('links')" class="tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🔗</span> <span class="pointer-events-none" data-i18n="tab_links">Enlaces</span>
                     </button>
-                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>📝</span> <span class="truncate pointer-events-none" data-i18n="tab_cleaner">Limpiador</span>
+                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>📝</span> <span class="pointer-events-none" data-i18n="tab_cleaner">Limpiador</span>
                     </button>
-                    <button type="button" id="btn-tab-crypto" onclick="switchTool('crypto')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>🔐</span> <span class="truncate pointer-events-none" data-i18n="tab_crypto">Dev & Crypto</span>
+                    <button type="button" id="btn-tab-crypto" onclick="switchTool('crypto')" class="tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🔐</span> <span class="pointer-events-none" data-i18n="tab_crypto">Dev & Crypto</span>
                     </button>
-                    <button type="button" id="btn-tab-diff" onclick="switchTool('diff')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
-                        <span>🔍</span> <span class="truncate pointer-events-none" data-i18n="tab_diff">Comparador</span>
+                    <button type="button" id="btn-tab-diff" onclick="switchTool('diff')" class="tool-tab-btn px-3.5 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🔍</span> <span class="pointer-events-none" data-i18n="tab_diff">Comparador</span>
                     </button>
                 </div>
 
