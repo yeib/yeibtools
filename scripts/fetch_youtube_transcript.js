@@ -69,6 +69,20 @@ function run() {
         } catch (e) {}
     }
 
+    // Limpiar archivos .vtt huérfanos de más de 10 minutos (si un proceso murió antes de limpiar)
+    try {
+        const staleFiles = fs.readdirSync(tempDir).filter(f => f.endsWith('.vtt'));
+        const TEN_MINUTES = 10 * 60 * 1000;
+        staleFiles.forEach(f => {
+            const fp = path.join(tempDir, f);
+            try {
+                if (Date.now() - fs.statSync(fp).mtimeMs > TEN_MINUTES) {
+                    fs.unlinkSync(fp);
+                }
+            } catch (e) {}
+        });
+    } catch (e) {}
+
     const outPattern = path.join(tempDir, `${videoId}`);
     const ytDlpBin = fs.existsSync('/usr/local/bin/yt-dlp') ? '/usr/local/bin/yt-dlp' : 'yt-dlp';
 

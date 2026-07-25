@@ -182,11 +182,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = document.getElementById('yt-search-input').value.toLowerCase().trim();
         const textContainer = document.getElementById('yt-raw-text');
 
+        if (!currentRawTranscript) return;
+
+        // Siempre reconstruir desde la fuente para no corromper el DOM con prefijos 👉
+        let baseText = currentRawTranscript;
+        if (currentFormatMode === 'plain') {
+            baseText = currentRawTranscript.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '');
+        } else if (currentFormatMode === 'paragraphs') {
+            const lines = currentRawTranscript.replace(/\[\d{2}:\d{2}(?::\d{2})?\]\s*/g, '').split('\n');
+            let paragraphs = [];
+            let currentP = [];
+            lines.forEach((line, index) => {
+                const trimmed = line.trim();
+                if (trimmed) {
+                    currentP.push(trimmed);
+                    if (currentP.length >= 4 || index === lines.length - 1) {
+                        paragraphs.push(currentP.join(' '));
+                        currentP = [];
+                    }
+                }
+            });
+            baseText = paragraphs.join('\n\n');
+        }
+
         if (!query) {
+            textContainer.innerText = baseText;
             return;
         }
 
-        const lines = textContainer.innerText.split('\n');
+        const lines = baseText.split('\n');
         const highlighted = lines.map(line => {
             if (line.toLowerCase().includes(query)) {
                 return `👉 ${line}`;
