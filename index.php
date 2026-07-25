@@ -239,22 +239,28 @@ $version = time();
             <!-- LEFT AREA: TOOLS GRID & ACTIVE PANEL (3 COLS) -->
             <div class="lg:col-span-3 space-y-6">
                 
-                <!-- TOOL TABS GRID (5 COLS DESKTOP, ORDERED, NO HORIZONTAL SCROLL) -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 relative z-20">
-                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none">
+                <!-- TOOL TABS GRID (SCROLLABLE EN MÓVIL, GRID EN DESKTOP) -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 relative z-20 pb-2 sm:pb-0 sm:grid sm:grid-cols-4 lg:grid-cols-7">
+                    <button type="button" id="btn-tab-youtube" onclick="switchTool('youtube')" class="tool-tab-btn px-4 py-3 bg-gradient-to-r from-teal-600 to-indigo-600 text-white border-transparent rounded-2xl text-[11px] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 cursor-pointer select-none whitespace-nowrap shrink-0">
                         <span>📺</span> <span class="truncate pointer-events-none" data-i18n="tab_youtube">Transcriptor</span>
                     </button>
-                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                    <button type="button" id="btn-tab-metadata" onclick="switchTool('metadata')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
                         <span>🕵️‍♂️</span> <span class="truncate pointer-events-none" data-i18n="tab_metadata">Metadatos</span>
                     </button>
-                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
-                        <span>📱</span> <span class="truncate pointer-events-none" data-i18n="tab_qr">Código QR</span>
+                    <button type="button" id="btn-tab-qr" onclick="switchTool('qr')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>📱</span> <span class="truncate pointer-events-none" data-i18n="tab_qr">QR & Barras</span>
                     </button>
-                    <button type="button" id="btn-tab-whatsapp" onclick="switchTool('whatsapp')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
-                        <span>💬</span> <span class="truncate pointer-events-none" data-i18n="tab_whatsapp">WhatsApp</span>
+                    <button type="button" id="btn-tab-links" onclick="switchTool('links')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🔗</span> <span class="truncate pointer-events-none" data-i18n="tab_links">Enlaces</span>
                     </button>
-                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none">
+                    <button type="button" id="btn-tab-cleaner" onclick="switchTool('cleaner')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
                         <span>📝</span> <span class="truncate pointer-events-none" data-i18n="tab_cleaner">Limpiador</span>
+                    </button>
+                    <button type="button" id="btn-tab-crypto" onclick="switchTool('crypto')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🔐</span> <span class="truncate pointer-events-none" data-i18n="tab_crypto">Dev & Crypto</span>
+                    </button>
+                    <button type="button" id="btn-tab-diff" onclick="switchTool('diff')" class="tool-tab-btn px-4 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-2xl text-[11px] font-black uppercase text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-500/50 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer select-none whitespace-nowrap shrink-0">
+                        <span>🔍</span> <span class="truncate pointer-events-none" data-i18n="tab_diff">Comparador</span>
                     </button>
                 </div>
 
@@ -277,7 +283,6 @@ $version = time();
                     <div id="yt-status" class="hidden"></div>
 
                     <div id="yt-result" class="hidden space-y-4 pt-2">
-                        <!-- META Y BUSCADOR INTERNO DE PALABRAS -->
                         <div class="flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-100 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/50">
                             <span id="yt-meta-info" class="text-xs font-black text-yeib-teal uppercase"></span>
                             <div class="w-full sm:w-64">
@@ -285,7 +290,6 @@ $version = time();
                             </div>
                         </div>
 
-                        <!-- BARRA DE ACCIONES: PROMPT IA, FORMATOS Y DESCARGAS (.TXT & .MD) -->
                         <div class="flex flex-wrap gap-2 pt-1">
                             <button type="button" onclick="copyYtPrompt()" class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white text-[10px] font-black uppercase rounded-xl transition-all shadow-md cursor-pointer" data-i18n="yt_copy_prompt">🤖 Copiar Prompt para tu IA</button>
                             <button type="button" onclick="toggleYtFormat('full')" id="yt-fmt-full" class="px-3 py-2 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_copy_full">📋 Con Tiempos</button>
@@ -295,7 +299,6 @@ $version = time();
                             <button type="button" onclick="downloadYtText('md')" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="yt_download_md">📝 Descargar .MD</button>
                         </div>
 
-                        <!-- VISUALIZADOR DE TEXTO -->
                         <div id="yt-raw-text" class="bg-slate-100 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-300 max-h-96 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
                     </div>
                 </div>
@@ -320,12 +323,10 @@ $version = time();
                         <span data-i18n="meta_security">🔒 <strong>Seguridad Extrema:</strong> El archivo se procesa localmente en la memoria RAM de tu dispositivo. Cero bytes subidos a la VPS.</span>
                     </div>
 
-                    <!-- MUESTRA DE RESULTADOS & METADATOS EXTRAÍDOS -->
                     <div id="metadata-result" class="hidden space-y-4">
                         <h4 id="metadata-filename" class="text-xs font-black uppercase text-yeib-teal"></h4>
                         <div id="metadata-output" class="bg-slate-100 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-slate-300 max-h-80 overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
 
-                        <!-- PANEL DE EDICIÓN AVANZADO (6 CAMPOS) -->
                         <div id="metadata-editor-box" class="hidden bg-slate-50 dark:bg-slate-900/80 p-6 rounded-3xl border border-slate-200 dark:border-slate-700/70 space-y-4">
                             <h3 class="text-sm font-black uppercase text-slate-900 dark:text-white tracking-wider flex items-center gap-2" data-i18n="meta_editor_title">
                                 🛠️ Editor & Sanitizador de Metadatos Avanzado
@@ -369,25 +370,32 @@ $version = time();
                     </div>
                 </div>
 
-                <!-- PANEL 3: GENERADOR QR PERSONALIZADO CON LOGO YEIB DISCRETO -->
+                <!-- PANEL 3: GENERADOR QR & CÓDIGO DE BARRAS -->
                 <div id="panel-qr" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Código QR Personalizado</span>
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📱</span> <span data-i18n="qr_title">Generador de Códigos QR & Códigos de Barras</span>
                         </h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Genera códigos QR de alta resolución con diseño de color e insignia discreta.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="qr_subtitle">Crea códigos QR personalizados y códigos de barras (Code 128) de alta resolución.</p>
                     </div>
 
-                    <!-- Input de Texto / URL -->
-                    <div class="space-y-2">
-                        <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="qr_label">Texto o URL a Codificar</label>
-                        <input type="text" id="qr-text-input" placeholder="Ej: https://tools.yeib.cl/" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
-                    </div>
-
-                    <!-- Opciones Visuales de Color y Fondo -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_color_label">Estilo de Color del QR</label>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_type_label">Tipo de Código</label>
+                            <select id="qr-type-select" onchange="toggleCodeTypeOptions()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 dark:text-white focus:outline-none cursor-pointer">
+                                <option value="qr" data-i18n="qr_type_qr">Código QR Personalizado</option>
+                                <option value="barcode" data-i18n="qr_type_barcode">Código de Barras (Code 128 / EAN)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_label">Texto, URL o Código a Generar</label>
+                            <input type="text" id="qr-text-input" placeholder="Ej: https://tools.yeib.cl/" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-medium text-xs focus:outline-none" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
+                        <div id="qr-color-option-box">
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_color_label">Estilo de Color</label>
                             <select id="qr-color-select" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none cursor-pointer">
                                 <option value="teal">Gradiente Neón (Teal & Indigo)</option>
                                 <option value="solid">Sólido Clásico (Negro / Blanco)</option>
@@ -396,77 +404,136 @@ $version = time();
                                 <option value="emerald">Verde Esmeralda</option>
                             </select>
                         </div>
-
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="qr_bg_label">Fondo</label>
                             <select id="qr-bg-select" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none cursor-pointer">
                                 <option value="light">Blanco Puro</option>
                                 <option value="dark">Oscuro Elegante</option>
-                                <option value="transparent">Transparente</option>
                             </select>
                         </div>
                     </div>
 
-                    <!-- Checkbox de Insignia de Diseño Discreta -->
-                    <div class="flex items-center gap-3 bg-teal-500/10 border border-teal-500/30 p-4 rounded-2xl">
+                    <div id="qr-logo-option-box" class="flex items-center gap-3 bg-teal-500/10 border border-teal-500/30 p-4 rounded-2xl">
                         <input type="checkbox" id="qr-logo-check" checked class="w-4 h-4 text-yeib-teal rounded border-slate-300 focus:ring-yeib-teal cursor-pointer">
                         <label for="qr-logo-check" class="text-xs font-bold text-teal-600 dark:text-teal-400 cursor-pointer select-none" data-i18n="qr_logo_option">
-                            Incluir insignia de verificación de diseño 🚀
+                            Incluir insignia de verificación Yeib en QR 🚀
                         </label>
                     </div>
 
-                    <!-- Botón Generar -->
-                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código QR Personalizado</button>
+                    <button type="button" onclick="generateQrCode()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="qr_btn">🎨 Generar Código HD</button>
 
-                    <!-- Resultado Canvas / Descarga -->
                     <div id="qr-output-container" class="flex flex-col items-center justify-center pt-4"></div>
                 </div>
 
-                <!-- PANEL 4: WHATSAPP LINK -->
-                <div id="panel-whatsapp" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                <!-- PANEL 4: ENLACES DIRECTOS (WHATSAPP, MAILTO, TEL/SMS) -->
+                <div id="panel-links" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
                     <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
                         <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">💬</span> <span data-i18n="wa_title">Generador de Enlaces de WhatsApp</span>
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🔗</span> <span data-i18n="links_title">Generador de Enlaces Directos</span>
                         </h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="wa_subtitle">Crea un enlace directo para iniciar chats sin guardar contactos.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="links_subtitle">Crea accesos directos para chats de WhatsApp, correos mailto y llamadas/SMS sin registrar contactos.</p>
                     </div>
 
-                    <div class="space-y-4">
+                    <!-- SUB-TABS -->
+                    <div class="flex gap-2 border-b border-slate-200 dark:border-slate-700/60 pb-3">
+                        <button type="button" id="btn-link-tab-wa" onclick="switchLinkSubTab('wa')" class="px-4 py-2 bg-yeib-teal text-white text-xs font-black uppercase rounded-xl transition-all shadow-md cursor-pointer" data-i18n="links_tab_wa">💬 WhatsApp</button>
+                        <button type="button" id="btn-link-tab-mail" onclick="switchLinkSubTab('mail')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black uppercase rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer" data-i18n="links_tab_mail">✉️ Correo Mailto</button>
+                        <button type="button" id="btn-link-tab-tel" onclick="switchLinkSubTab('tel')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black uppercase rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer" data-i18n="links_tab_tel">📞 Teléfono / SMS</button>
+                    </div>
+
+                    <!-- SUB-PANEL WHATSAPP -->
+                    <div id="link-sub-wa" class="space-y-4">
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="wa_phone_label">Número de Teléfono (con código de país sin +)</label>
                             <input type="text" id="wa-phone" placeholder="Ej: 56912345678" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
                         </div>
-
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="wa_msg_label">Mensaje Pre-llenado (Opcional)</label>
                             <textarea id="wa-message" placeholder="Ej: Hola, vi tu anuncio y quiero consultar..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-24"></textarea>
                         </div>
+                        <button type="button" onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="wa_btn">🔗 Crear Enlace Directo WhatsApp</button>
+
+                        <div id="wa-result" class="hidden space-y-3 pt-2">
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="wa_result_label">Tu Enlace Generado:</label>
+                            <div class="flex flex-wrap gap-2">
+                                <input type="text" id="wa-generated-link" readonly class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3 text-slate-900 dark:text-white font-mono text-xs focus:outline-none" />
+                                <button type="button" onclick="copyDirectLink('wa-generated-link')" class="px-4 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-black uppercase rounded-2xl transition-all cursor-pointer" data-i18n="wa_copy">Copiar</button>
+                                <a id="wa-test-btn" href="#" target="_blank" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center" data-i18n="wa_test">Probar Chat</a>
+                            </div>
+                        </div>
                     </div>
 
-                    <button type="button" onclick="generateWhatsappLink()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="wa_btn">🔗 Crear Enlace Directo</button>
+                    <!-- SUB-PANEL MAILTO -->
+                    <div id="link-sub-mail" class="space-y-4" style="display: none;">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="mail_to_label">Correo Electrónico Destino</label>
+                            <input type="email" id="mail-to" placeholder="contacto@empresa.com" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="mail_sub_label">Asunto del Correo</label>
+                            <input type="text" id="mail-subject" placeholder="Consulta sobre servicios" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="mail_body_label">Cuerpo del Mensaje (Opcional)</label>
+                            <textarea id="mail-body" placeholder="Hola, me gustaría solicitar información sobre..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-24"></textarea>
+                        </div>
+                        <button type="button" onclick="generateMailtoLink()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="mail_btn">✉️ Crear Enlace Mailto</button>
 
-                    <div id="wa-result" class="hidden space-y-3 pt-2">
-                        <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="wa_result_label">Tu Enlace Generado:</label>
-                        <div class="flex flex-wrap gap-2">
-                            <input type="text" id="wa-generated-link" readonly class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3 text-slate-900 dark:text-white font-mono text-xs focus:outline-none" />
-                            <button type="button" onclick="copyWaLink()" class="px-4 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-black uppercase rounded-2xl transition-all cursor-pointer" data-i18n="wa_copy">Copiar</button>
-                            <a id="wa-test-btn" href="#" target="_blank" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center" data-i18n="wa_test">Probar Chat</a>
+                        <div id="mail-result" class="hidden space-y-3 pt-2">
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">Tu Enlace Mailto Generado:</label>
+                            <div class="flex flex-wrap gap-2">
+                                <input type="text" id="mail-generated-link" readonly class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3 text-slate-900 dark:text-white font-mono text-xs focus:outline-none" />
+                                <button type="button" onclick="copyDirectLink('mail-generated-link')" class="px-4 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-black uppercase rounded-2xl transition-all cursor-pointer">Copiar</button>
+                                <a id="mail-test-btn" href="#" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center">Probar Enlace</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUB-PANEL TEL/SMS -->
+                    <div id="link-sub-tel" class="space-y-4" style="display: none;">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="tel_num_label">Número Telefónico</label>
+                                <input type="text" id="tel-phone" placeholder="Ej: +56912345678" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all" />
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider mb-2" data-i18n="tel_type_label">Acción Directa</label>
+                                <select id="tel-mode-select" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none cursor-pointer">
+                                    <option value="tel">📞 Llamada Telefónica (tel:)</option>
+                                    <option value="sms">💬 Mensaje SMS (sms:)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" onclick="generateTelLink()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="tel_btn">📞 Crear Enlace Telefónico / SMS</button>
+
+                        <div id="tel-result" class="hidden space-y-3 pt-2">
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider">Tu Enlace Directo:</label>
+                            <div class="flex flex-wrap gap-2">
+                                <input type="text" id="tel-generated-link" readonly class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3 text-slate-900 dark:text-white font-mono text-xs focus:outline-none" />
+                                <button type="button" onclick="copyDirectLink('tel-generated-link')" class="px-4 py-3 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-black uppercase rounded-2xl transition-all cursor-pointer">Copiar</button>
+                                <a id="tel-test-btn" href="#" class="px-5 py-3 bg-yeib-teal hover:bg-teal-600 text-white text-xs font-black uppercase rounded-2xl transition-all flex items-center">Probar Acceso</a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- PANEL 5: LIMPIADOR DE TEXTO -->
+                <!-- PANEL 5: LIMPIADOR DE TEXTO (CON UNDO Y MODOS AVANZADOS) -->
                 <div id="panel-cleaner" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
-                    <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
-                        <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📝</span> <span data-i18n="clean_title">Limpiador y Formateador de Texto</span>
-                        </h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="clean_subtitle">Normaliza, convierte a mayúsculas/minúsculas y elimina espacios sobrantes instantáneamente.</p>
+                    <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4 flex justify-between items-start">
+                        <div>
+                            <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                                <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">📝</span> <span data-i18n="clean_title">Limpiador y Formateador de Texto Avanzado</span>
+                            </h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="clean_subtitle">Normaliza texto, arregla saltos de línea de PDFs, prepara prompts para IA y deshace cambios.</p>
+                        </div>
+                        <button type="button" onclick="undoCleanerText()" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black uppercase rounded-xl transition-all flex items-center gap-1.5 cursor-pointer border border-amber-500/30" data-i18n="clean_undo">
+                            ↺ Deshacer
+                        </button>
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider" data-i18n="clean_label">Ingresa tu Texto</label>
-                        <textarea id="cleaner-input" oninput="updateTextStats()" data-i18n="clean_placeholder" placeholder="Pega tu texto aquí..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-36"></textarea>
+                        <textarea id="cleaner-input" oninput="updateTextStats()" data-i18n="clean_placeholder" placeholder="Pega tu texto aquí..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-yeib-teal focus:outline-none transition-all h-40"></textarea>
                     </div>
 
                     <div class="flex flex-wrap gap-2">
@@ -475,13 +542,166 @@ $version = time();
                         <button type="button" onclick="processText('title')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_title_case">Modo Título</button>
                         <button type="button" onclick="processText('spaces')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_spaces">Sin Dobles Espacios</button>
                         <button type="button" onclick="processText('newlines')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-650 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_newlines">Sin Saltos de Línea</button>
-                        <button type="button" onclick="copyCleanerText()" class="px-5 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_copy">📋 Copiar Texto</button>
+                        <button type="button" onclick="processText('pdf')" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_pdf">📄 Arreglar Saltos PDF</button>
+                        <button type="button" onclick="processText('ai')" class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer" data-i18n="clean_ai">🤖 Limpieza Prompt IA</button>
+                        <button type="button" onclick="copyCleanerText()" class="px-5 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer ml-auto" data-i18n="clean_copy">📋 Copiar Texto</button>
                     </div>
 
                     <div class="flex items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-bold pt-2">
                         <span><span data-i18n="clean_chars">Caracteres:</span> <strong id="text-stat-chars" class="text-yeib-teal font-black">0</strong></span>
                         <span><span data-i18n="clean_words">Palabras:</span> <strong id="text-stat-words" class="text-indigo-500 dark:text-indigo-400 font-black">0</strong></span>
                         <span><span data-i18n="clean_lines">Líneas:</span> <strong id="text-stat-lines" class="text-emerald-500 dark:text-emerald-400 font-black">0</strong></span>
+                    </div>
+                </div>
+
+                <!-- PANEL 6: DEV & CRYPTO SUITE -->
+                <div id="panel-crypto" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                    <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
+                        <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🔐</span> <span data-i18n="crypto_title">Dev & Crypto Suite (Criptografía & Hashes)</span>
+                        </h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="crypto_subtitle">Herramientas de cifrado AES, generador de Hashes, encoder Base64 y contraseñas seguras 100% client-side.</p>
+                    </div>
+
+                    <!-- SUB TABS DEV CRYPTO -->
+                    <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700/60 pb-3">
+                        <button type="button" id="btn-crypto-tab-cipher" onclick="switchCryptoSubTab('cipher')" class="px-4 py-2 bg-yeib-teal text-white text-xs font-black uppercase rounded-xl transition-all shadow-md cursor-pointer" data-i18n="crypto_tab_cipher">🔒 Cifrador AES</button>
+                        <button type="button" id="btn-crypto-tab-hash" onclick="switchCryptoSubTab('hash')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black uppercase rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer" data-i18n="crypto_tab_hash">⚡ Hashes (SHA/MD5)</button>
+                        <button type="button" id="btn-crypto-tab-pass" onclick="switchCryptoSubTab('pass')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black uppercase rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer" data-i18n="crypto_tab_pass">🔑 Generador Passwords</button>
+                        <button type="button" id="btn-crypto-tab-base64" onclick="switchCryptoSubTab('base64')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black uppercase rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer" data-i18n="crypto_tab_base64">🔤 Base64 / URL</button>
+                    </div>
+
+                    <!-- SUB PANEL AES CIPHER -->
+                    <div id="crypto-sub-cipher" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Texto Original / Cifrado</label>
+                                <textarea id="aes-text-input" placeholder="Escribe el texto a cifrar o desencriptar..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white font-mono h-28 focus:outline-none"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Resultado Cifrado / Descrifrado</label>
+                                <textarea id="aes-output" readonly placeholder="El resultado aparecerá aquí..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-yeib-teal font-mono h-28 focus:outline-none"></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Clave Secreta de Encriptación</label>
+                            <input type="password" id="aes-key-input" placeholder="Ingresa una frase clave o contraseña..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white font-bold focus:outline-none" />
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="processAesCipher('encrypt')" class="px-5 py-3 bg-yeib-teal text-white font-black text-xs uppercase rounded-xl transition-all shadow-md active:scale-95 cursor-pointer">🔒 Encriptar (AES-256)</button>
+                            <button type="button" onclick="processAesCipher('decrypt')" class="px-5 py-3 bg-indigo-600 text-white font-black text-xs uppercase rounded-xl transition-all shadow-md active:scale-95 cursor-pointer">🔓 Desencriptar</button>
+                        </div>
+                    </div>
+
+                    <!-- SUB PANEL HASHES -->
+                    <div id="crypto-sub-hash" class="space-y-4" style="display: none;">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Texto a Calcular Hashes</label>
+                            <input type="text" id="hash-text-input" oninput="generateCryptoHashes()" placeholder="Escribe cualquier texto aquí..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-5 py-3 text-slate-900 dark:text-white font-medium text-sm focus:outline-none" />
+                        </div>
+                        <div class="space-y-3 pt-2">
+                            <div>
+                                <label class="block text-[9px] font-black uppercase text-slate-400 mb-0.5">SHA-256 (Recomendado)</label>
+                                <input type="text" id="hash-sha256" readonly class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-yeib-teal select-all focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black uppercase text-slate-400 mb-0.5">SHA-512</label>
+                                <input type="text" id="hash-sha512" readonly class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-indigo-400 select-all focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black uppercase text-slate-400 mb-0.5">SHA-1</label>
+                                <input type="text" id="hash-sha1" readonly class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-slate-400 select-all focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black uppercase text-slate-400 mb-0.5">MD5</label>
+                                <input type="text" id="hash-md5" readonly class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-amber-500 select-all focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUB PANEL PASSWORDS -->
+                    <div id="crypto-sub-pass" class="space-y-4" style="display: none;">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Longitud de Contraseña</label>
+                                <input type="number" id="pass-length" value="20" min="8" max="64" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none" />
+                            </div>
+                            <div class="flex flex-col justify-center space-y-2 pt-2">
+                                <label class="inline-flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
+                                    <input type="checkbox" id="pass-opt-upper" checked class="rounded text-yeib-teal"> Mayúsculas (A-Z)
+                                </label>
+                                <label class="inline-flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
+                                    <input type="checkbox" id="pass-opt-lower" checked class="rounded text-yeib-teal"> Minúsculas (a-z)
+                                </label>
+                                <label class="inline-flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
+                                    <input type="checkbox" id="pass-opt-num" checked class="rounded text-yeib-teal"> Números (0-9)
+                                </label>
+                                <label class="inline-flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
+                                    <input type="checkbox" id="pass-opt-sym" checked class="rounded text-yeib-teal"> Símbolos (!@#$%)
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="generatePassword()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer">🔑 Generar Contraseña Segura</button>
+
+                        <div class="space-y-2 pt-2">
+                            <div class="flex justify-between items-center">
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400">Contraseña Generada:</label>
+                                <span id="pass-entropy-badge" class="px-3 py-1 rounded-xl text-xs font-black uppercase bg-emerald-500/20 text-emerald-500">Entropía: --</span>
+                            </div>
+                            <input type="text" id="pass-output" readonly class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-white font-mono text-sm font-bold select-all focus:outline-none" />
+                        </div>
+                    </div>
+
+                    <!-- SUB PANEL BASE64 / URL -->
+                    <div id="crypto-sub-base64" class="space-y-4" style="display: none;">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Texto de Entrada</label>
+                                <textarea id="base64-input" placeholder="Ingresa texto o Base64..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white font-mono h-32 focus:outline-none"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1">Resultado Codificado / Decodificado</label>
+                                <textarea id="base64-output" readonly class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-yeib-teal font-mono h-32 focus:outline-none"></textarea>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" onclick="processBase64Url('b64encode')" class="px-4 py-2.5 bg-yeib-teal text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer">Base64 Encode</button>
+                            <button type="button" onclick="processBase64Url('b64decode')" class="px-4 py-2.5 bg-indigo-600 text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer">Base64 Decode</button>
+                            <button type="button" onclick="processBase64Url('urlencode')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer">URL Encode</button>
+                            <button type="button" onclick="processBase64Url('urldecode')" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white text-[10px] font-black uppercase rounded-xl transition-all cursor-pointer">URL Decode</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 7: COMPARADOR FORENSE DE TEXTOS (DIFF CHECKER) -->
+                <div id="panel-diff" class="tool-panel hidden bg-white/95 dark:bg-slate-800/90 backdrop-blur-lg p-8 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-700/70 shadow-xl space-y-6 transition-colors" style="display: none;">
+                    <div class="border-b border-slate-200 dark:border-slate-700/60 pb-4">
+                        <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                            <span class="p-2 rounded-xl bg-teal-500/10 text-yeib-teal text-xl">🔍</span> <span data-i18n="diff_title">Comparador Forense de Textos (Diff Checker)</span>
+                        </h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1" data-i18n="diff_subtitle">Inspecciona diferencias entre dos bloques de texto en tiempo real. Resaltado de agregados y eliminaciones.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1" data-i18n="diff_label_original">Texto Original (Versión A)</label>
+                            <textarea id="diff-text-a" placeholder="Pega el texto original..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white font-mono h-40 focus:outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1" data-i18n="diff_label_modified">Texto Modificado (Versión B)</label>
+                            <textarea id="diff-text-b" placeholder="Pega el texto modificado..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white font-mono h-40 focus:outline-none"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="compareDiffTexts()" class="px-6 py-3.5 bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-500 hover:to-indigo-500 text-white font-black text-xs uppercase rounded-2xl transition-all shadow-lg shadow-teal-600/20 active:scale-95 cursor-pointer" data-i18n="diff_btn_compare">🔍 Comparar Diferencias</button>
+
+                    <div id="diff-result-box" class="hidden space-y-3 pt-2">
+                        <div class="flex justify-between items-center bg-slate-100 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/50">
+                            <span class="text-xs font-black uppercase text-slate-700 dark:text-slate-300">Resumen de Diferencias:</span>
+                            <span id="diff-stats" class="text-xs font-bold"></span>
+                        </div>
+                        <div id="diff-result-container" class="bg-slate-100 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-1 max-h-96 overflow-y-auto"></div>
                     </div>
                 </div>
 
